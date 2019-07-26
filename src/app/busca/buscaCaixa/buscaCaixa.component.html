@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <form (ngSubmit)="onBuscar()" #frmBusca="ngForm">
+                <div class="form-group">
+                    <input
+                        type="text" 
+                        name="txtbusca"
+                        id="txtbusca"
+                        placeholder="Faça sua busca aqui" 
+                        class="form-control"
+                        ngModel
+                        required
+                    >
+                </div>
+                <button type="submit" class="btn btn-primary">Pesquisar</button>
+            </form>
+        </div>
+    </div>
+</div>
