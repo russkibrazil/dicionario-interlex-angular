@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./busca-resultados.component.css']
 })
 export class BuscaResultadosComponent implements OnInit {
-
+  resultados = null;
   constructor() { }
 
   ngOnInit() {

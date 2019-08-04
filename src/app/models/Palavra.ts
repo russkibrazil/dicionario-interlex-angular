@@ -4,7 +4,7 @@ export class Palavra{
     public ClasseGram: number;
     public idioma: string;
     public notasGramatica : string;
-    public id_conjuga : number;
+    public notaCultura : number;
     public Genero : string;
     public Definicao : string;
 
