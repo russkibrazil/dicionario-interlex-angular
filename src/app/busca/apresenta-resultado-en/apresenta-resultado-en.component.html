@@ -1,0 +1,82 @@
+<app-menu-superior></app-menu-superior>
+
+<div class="row">
+    <div class="col-sm-12">
+        <h2>{{palavra.lema}}</h2>
+        <h5>{{palavra.classeGram}}</h5>
+    </div>
+</div>
+
+<div class="row">
+    <ol class="list-group">
+        <li class="list-group-item" *ngFor="let eq of equivalentes">({{eq.palavraGuia}})</li>
+    </ol>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div *ngFor="let item of listaDestEq">
+            <h3>{{item.lema}}</h3>
+
+            <table class="table table-light">
+                <thead>
+                    <tr>
+                        <th>Presente Simples</th>
+                        <th>Passado Simples</th>
+                        <th>Futuro (Will)</th>
+                        <th>Futuro (be + Going to)</th>
+                        <th>Presente perfeito</th>
+                        <th>Passado perfeito</th>
+                        <th>Presente contínuo</th>
+                        <th>Passado Contínuo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{conjugaEn.constrPresente}}</td>
+                        <td>{{conjugaEn.constrPassado}}</td>
+                        <td>{{conjugaEn.constrWill}}</td>
+                        <td>{{conjugaEn.constrGoingTo}}</td>
+                        <td>{{conjugaEn.constrPresPer}}</td>
+                        <td>{{conjugaEn.constrPasPer}}</td>
+                        <td>{{conjugaEn.constrPresCon}}</td>
+                        <td>{{conjugaEn.constrPasCon}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>{{item.notaCultura}}</p>
+            <br>
+            <p>{{item.notasGramatica}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <h3>Fraseologia</h3>
+    </div>
+</div>
+<div class="row" *ngFor="let f of frases">
+    <table class="table table-light">
+        <tbody>
+            <tr>
+                <td><p>{{f.fraseOrig}}</p></td>
+                <td><p>{{f.fraseEquiv}}</p></td>
+            </tr>
+            <tr>
+                <td><p>Exemplo: {{f.exemploOriginal}}</p></td>
+                <td><p>Exemplo: {{f.exemploEquivalente}}</p></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="col-md-12">
+        <h5>Notas culturais</h5>
+        <p>{{f.notaCultura}}</p>
+        <br>
+        <h5>Notas Gramaticais</h5>
+        <p>{{f.notasGramatica}}</p>
+    </div>
+</div>
+<div class="row">
+</div>

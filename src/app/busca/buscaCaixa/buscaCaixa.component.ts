@@ -12,20 +12,21 @@ import { Palavra } from 'src/app/models/Palavra';
 })
 export class BuscaCaixaComponent implements OnInit {
   @ViewChild('frmBusca', {static: true}) formBusca: NgForm;
-  resultados :  Palavra[];
+  
   
   constructor(private rt: ActivatedRoute, private rts: Router, private mysqlMgr :  MySqlConnectorService){}
 
   onBuscar(){
     const chavePesquisa = this.formBusca.value.txtbusca;
-    let pesquisa = new MysqlBasePackage('palavra', 'SELECT * FROM palavra WHERE lema LIKE \'' + chavePesquisa + '\'');
+    /*let pesquisa = new MysqlBasePackage('palavra', 'SELECT * FROM palavra WHERE lema LIKE \'' + chavePesquisa + '\'');
     this.mysqlMgr.readOperation(pesquisa)
       .subscribe(
         (ret : Palavra[])=>{
           this.resultados = ret;
         }
       )
-    ;
+    ;*/
+
   }
   
   ngOnInit() {
