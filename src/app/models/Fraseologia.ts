@@ -8,5 +8,14 @@ export class Fraseologia{
     public notasGramatica : string;
     public categoria : string;
 
-    constructor(){}
+    constructor(id : number, fOrig : string, fEquiv : string, eOrig : string, eEquiv : string, nCultural : string, nGramatical : string, cat : string){
+        this.idPalavra = id;
+        this.fraseOrig = fOrig;
+        this.fraseEquiv = fEquiv;
+        this.exemploOriginal = eOrig;
+        this.exemploEquivalente = eEquiv;
+        this.notasCultura = nCultural;
+        this.notasGramatica = nGramatical;
+        this.categoria= cat;
+    }
 }

@@ -1,21 +1,19 @@
-<app-menu-superior></app-menu-superior>
-
 <div class="row">
     <div class="col-sm-12">
-        <h2>{{palavra.lema}}</h2>
-        <h5>{{palavra.classeGram}}</h5>
+        <h2>{{palavraBuscada.lema}}</h2>
+        <h5>{{palavraBuscada.cGram}}</h5>
     </div>
 </div>
 
 <div class="row">
     <ol class="list-group">
-        <li class="list-group-item" *ngFor="let eq of equivalentes">({{eq.palavraGuia}})</li>
+        <li class="list-group-item" *ngFor="let eq of palavraBuscada.listaEq">({{eq.palavraGuia}})</li>
     </ol>
 </div>
 
 <div class="row">
     <div class="col-sm-12">
-        <div *ngFor="let item of listaDestEq">
+        <div *ngFor="let item of palavraBuscada.listaConjEq">
             <h3>{{item.lema}}</h3>
 
             <table class="table table-light">
@@ -33,14 +31,14 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{conjugaEn.constrPresente}}</td>
-                        <td>{{conjugaEn.constrPassado}}</td>
-                        <td>{{conjugaEn.constrWill}}</td>
-                        <td>{{conjugaEn.constrGoingTo}}</td>
-                        <td>{{conjugaEn.constrPresPer}}</td>
-                        <td>{{conjugaEn.constrPasPer}}</td>
-                        <td>{{conjugaEn.constrPresCon}}</td>
-                        <td>{{conjugaEn.constrPasCon}}</td>
+                        <td>{{item.constrPresente}}</td>
+                        <td>{{item.constrPassado}}</td>
+                        <td>{{item.constrWill}}</td>
+                        <td>{{item.constrGoingTo}}</td>
+                        <td>{{item.constrPresPer}}</td>
+                        <td>{{item.constrPasPer}}</td>
+                        <td>{{item.constrPresCon}}</td>
+                        <td>{{item.constrPasCon}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -57,7 +55,7 @@
         <h3>Fraseologia</h3>
     </div>
 </div>
-<div class="row" *ngFor="let f of frases">
+<div class="row" *ngFor="let f of palavraBuscada.frasesRelacionadas">
     <table class="table table-light">
         <tbody>
             <tr>
@@ -72,7 +70,7 @@
     </table>
     <div class="col-md-12">
         <h5>Notas culturais</h5>
-        <p>{{f.notaCultura}}</p>
+        <p>{{f.notasCultura}}</p>
         <br>
         <h5>Notas Gramaticais</h5>
         <p>{{f.notasGramatica}}</p>
