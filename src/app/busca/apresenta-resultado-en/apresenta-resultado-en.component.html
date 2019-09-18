@@ -5,57 +5,56 @@
     </div>
 </div>
 
-<div class="row">
-    <ol class="list-group">
-        <li class="list-group-item" *ngFor="let eq of palavraBuscada.listaEq">({{eq.palavraGuia}})</li>
-    </ol>
-</div>
-
-<div class="row">
-    <div class="col-sm-12">
-        <div *ngFor="let item of palavraBuscada.listaConjEq">
-            <h3>{{item.lema}}</h3>
-
-            <table class="table table-light">
-                <thead>
-                    <tr>
-                        <th>Presente Simples</th>
-                        <th>Passado Simples</th>
-                        <th>Futuro (Will)</th>
-                        <th>Futuro (be + Going to)</th>
-                        <th>Presente perfeito</th>
-                        <th>Passado perfeito</th>
-                        <th>Presente contínuo</th>
-                        <th>Passado Contínuo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{item.constrPresente}}</td>
-                        <td>{{item.constrPassado}}</td>
-                        <td>{{item.constrWill}}</td>
-                        <td>{{item.constrGoingTo}}</td>
-                        <td>{{item.constrPresPer}}</td>
-                        <td>{{item.constrPasPer}}</td>
-                        <td>{{item.constrPresCon}}</td>
-                        <td>{{item.constrPasCon}}</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p>{{item.notaCultura}}</p>
-            <br>
-            <p>{{item.notasGramatica}}</p>
+<div class="row" *ngFor="let eq of palavraBuscada.listaEq; let j = index">
+    <p>{{j}} {{eq.palavraGuia}}</p>
+    <div class="row">  
+        <div class="col-sm-12">
+            <div>
+                <h3>{{palavraBuscada.listaConjEq[j].lema}}</h3>
+                
+                <table class="table table-light">
+                    <thead>
+                        <tr>
+                            <th>Presente Simples</th>
+                            <th>Passado Simples</th>
+                            <th>Futuro (Will)</th>
+                            <th>Futuro (be + Going to)</th>
+                            <th>Presente perfeito</th>
+                            <th>Passado perfeito</th>
+                            <th>Presente contínuo</th>
+                            <th>Passado Contínuo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{palavraBuscada.listaConjEq[j].constrPresente}}</td>
+                            <td>{{palavraBuscada.listaConjEq[j].constrPassado}}</td>
+                            <td>{{palavraBuscada.listaConjEq[j].constrWill}}</td>
+                            <td>{{palavraBuscada.listaConjEq[j].constrGoingTo}}</td>
+                            <td>{{palavraBuscada.listaConjEq[j].constrPresPer}}</td>
+                            <td>{{palavraBuscada.listaConjEq[j].constrPasPer}}</td>
+                            <td>{{palavraBuscada.listaConjEq[j].constrPresCon}}</td>
+                            <td>{{palavraBuscada.listaConjEq[j].constrPasCon}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <p>{{palavraBuscada.listaConjEq[j].notaCultura}}</p>
+                <br>
+                <p>{{palavraBuscada.listaConjEq[j].notasGramatica}}</p>
+            </div>
         </div>
     </div>
-</div>
+ </div>
+
 
 <div class="row">
     <div class="col-sm-12">
         <h3>Fraseologia</h3>
     </div>
 </div>
-<div class="row" *ngFor="let f of palavraBuscada.frasesRelacionadas">
+<div class="row" *ngFor="let f of palavraBuscada.frasesRelacionadas; let i = index">
+   <p>Exemplo {{i}}</p>
     <table class="table table-light">
         <tbody>
             <tr>

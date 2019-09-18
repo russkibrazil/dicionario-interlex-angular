@@ -28,8 +28,13 @@ export class ApresentaResultadoEnComponent implements OnInit {
         this.palavraBuscada.idPalavra = 1;
         this.palavraBuscada.lema = 'sdasdasd';
         this.palavraBuscada.cGram = 'classe gramatical';
-        this.palavraBuscada.listaEq = [new Equivalente(1, 2, 'Exemplo de uso de equivalente', 'equivalent use test string', 231, 'keyword',1)];
-        this.palavraBuscada.listaConjEq = [conjEn];
-        this.palavraBuscada.frasesRelacionadas = [new Fraseologia(1,'Frase original de fraseologia', 'frase quivalente de fraseologia', 'exemplo de uso original', 'exemplo de uso equivlanete', 'notas culturais de fraseologia', 'notas gramaticais de fraseologia', 'categoria de fraseologia')];
+        this.palavraBuscada.listaEq = [
+            new Equivalente(1, 2, 'Exemplo de uso de equivalente', 'equivalent use test string', 231, 'keyword',1),
+            new Equivalente(2,3, 'Outro exemplo', 'outro exemplo original traduzido', 2, 'outra palabra guia', 4)];
+        this.palavraBuscada.listaConjEq = [conjEn, conjEn];
+        this.palavraBuscada.frasesRelacionadas = [
+            new Fraseologia(1,'Frase original de fraseologia', 'frase quivalente de fraseologia', 'exemplo de uso original', 'exemplo de uso equivlanete', 'notas culturais de fraseologia', 'notas gramaticais de fraseologia', 'categoria de fraseologia'),
+            new Fraseologia(2, 'Outra frase original', 'outra frase equivalente', 'exemplo de como usar originalmente esta frase', 'exemplo de como usar originalmen te esta frase traduzida', 'notas culturais', 'notas gramaticais', 'c')
+        ];
     }
 }
