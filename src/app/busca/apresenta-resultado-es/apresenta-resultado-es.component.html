@@ -1,0 +1,31 @@
+<div class="row">
+
+    <div class="col-xs-4">
+        <ul>
+            <li></li> <!--ngfor com os resultados, somente lema-->
+        </ul>
+    </div>
+    
+    <div class="col-xs-8">
+        <h3>{{resultadosEs.sublema}} {{resultadosEs.lema}}</h3>
+        <h4>({{resultadosEs.cGram}} {{resultadosEs.genero}})</h4>
+        <div *ngIf="resultadosEs.definicao">
+            <h5>Definição do lema cabeça</h5>
+            <p>{{resultadosEs.definicao}}</p>
+        </div>
+        <div *ngFor="let eq of resultadosEs.listaEq">
+            <p>{{eq.nOrdem}}</p>
+            <b>{{eq.equivalente}}</b>
+            <p>{{eq.palavraGuia}}</p>
+            <table class="table table-light">
+                <tbody>
+                    <tr>
+                        <td><p>{{eq.exemplo}}</p></td>
+                        <td><p>{{eq.exemploTraduzido}}</p></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+        </div>
+    </div>
+</div>
