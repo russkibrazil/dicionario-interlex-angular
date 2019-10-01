@@ -6,10 +6,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BuscaModule } from './busca/busca.module';
 import { CompartilhadoModule } from './shared/shared.module';
+import { PalavrasComponent } from './manuten/palavras/palavras.component';
+import { FraseologiaComponent } from './manuten/fraseologia/fraseologia.component';
+import { PalavraGuiaComponent } from './manuten/palavra-guia/palavra-guia.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PalavrasComponent,
+    FraseologiaComponent,
+    PalavraGuiaComponent
   ],
   imports: [
     BrowserModule,

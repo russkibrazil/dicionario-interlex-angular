@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <form [formGroup]=fraseForm (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="fraseOriginal">Frase Original</label>
+                    <input type="text" name="fraseOriginal" id="fraseOriginal"
+                    formControlName="fraseOriginal"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="fraseEquivalente">Frase Equivalente</label>
+                    <input id="fraseEquivalente" class="form-control" type="text" name="fraseEquivalente">
+                </div>
+                <div class="form-group">
+                    <label for="exemploForiginal">Exemplo da frase Original</label>
+                    <input id="exemploForiginal" class="form-control" type="text" name="exemploForiginal">
+                </div>
+                <div class="form-group">
+                    <label for="exemploFequivalente">Exemplo de frase Equivalente</label>
+                    <input id="exemploFequivalente" class="form-control" type="text" name="exemploFequivalente">
+                </div>
+                <div class="form-group">
+                    <label for="notasGramaticais">Notas gramaticais</label>
+                    <input id="notasGramaticais" class="form-control" type="text" name="notasGramaticais">
+                </div>
+                <div class="form-group">
+                    <label for="notasCulturais">Notas Culturais</label>
+                    <input id="notasCulturais" class="form-control" type="text" name="notasCulturais">
+                </div>
+                
+                <button class="btn btn-primary" type="submit">Salvar</button>
+            </form>
+        </div>
+    </div>
+</div>
