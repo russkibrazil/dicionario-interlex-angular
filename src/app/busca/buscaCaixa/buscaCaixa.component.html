@@ -1,20 +1,17 @@
-<div class="container">
-    <div class="row">
-        <div class="col-sm-8">
-            <form (ngSubmit)="onBuscar()" #frmBusca="ngForm">
-                <div class="form-group">
-                    <input
-                        type="text" 
-                        name="txtbusca"
-                        id="txtbusca"
-                        placeholder="Faça sua busca aqui" 
-                        class="form-control"
-                        ngModel
-                        required
-                    >
-                    <button type="submit" class="btn btn-primary">Pesquisar</button>
-                </div>
-            </form>
+
+<div class="col-sm-8 col-sm-offset-1">
+    <form (ngSubmit)="onBuscar()" #frmBusca="ngForm">
+        <div class="form-group">
+            <input
+                type="text" 
+                name="txtbusca"
+                id="txtbusca"
+                placeholder="Faça sua busca aqui" 
+                class="form-control"
+                ngModel
+                required
+            >
+            <button type="submit" class="btn btn-primary">Pesquisar</button>
         </div>
-    </div>
+    </form>
 </div>

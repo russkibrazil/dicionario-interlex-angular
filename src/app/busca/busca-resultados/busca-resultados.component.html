@@ -1,30 +1,33 @@
-<h3>Resultados possíveis</h3>
-
-<div *ngIf="idioma =='es'; else generico">
-    <div 
-        *ngFor="let palavra of resultados" 
-        (click)="onClickElemento('es', palavra.id, palavra.lema)"
-        class="col-xs-3"
-    >
-        <p>{{palavra.lema}}</p>
-    </div>
-    <div class="col-xs-9">
-        <div class="col-sm-12"
+<div class="col-sm-12">
+    <h3>Resultados possíveis</h3>
+    
+    <div *ngIf="idioma == es">
+        <div 
             *ngFor="let palavra of resultados" 
-            (click)="onClickElemento()"
+            (click)="onClickElemento('es', palavra.id, palavra.lema)"
+            class="col-xs-3"
         >
-            <h5>{{palavra.lema}}</h5>
+            <p>{{palavra.lema}}</p>
+        </div>
+        <div class="col-xs-9">
+            <div class="col-sm-12"
+                *ngFor="let palavra of resultados" 
+                (click)="onClickElemento()"
+            >
+                <h5>{{palavra.lema}}</h5>
+            </div>
         </div>
     </div>
-</div>
-
-<ng-template #generico>
-    <div 
-        *ngFor="let palavra of resultados" 
-        (click)="onClickElemento('en', palavra.id, palavra.lema)"
-        class="col-xs-12"
-    >
-        <h5>{{palavra.lema}}</h5>
-        <p>{{palavra.Definicao}}</p>
+    
+    <div *ngIf="idioma !== es">
+        <div 
+            *ngFor="let palavra of resultados" 
+            (click)="onClickElemento('en', palavra.id, palavra.lema)"
+            class="col-xs-12"
+        >
+            <h5>{{palavra.lema}}</h5>
+            <p>{{palavra.Definicao}}</p>
+        </div>
     </div>
-</ng-template>
+
+</div>

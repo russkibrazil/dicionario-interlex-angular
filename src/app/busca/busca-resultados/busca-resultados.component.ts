@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class BuscaResultadosComponent implements OnInit {
   resultados :  Palavra[] = [new Palavra(1, 'sdasdasd', 'dsdasdas', 'dsadasdasda', 'asfdadfadfad', 'afdasfdasfdsf', 'asdfdafdsfs', 'asdfasfasdf'),
   new Palavra(2,'Minha palavra', 'classe', 'idioma', 'notag', 'notac', 'genero', 'definicao')];
-  idioma : string = 'es';
+  idioma = 'es';
 
   constructor(private rotas : Router) { }
 
