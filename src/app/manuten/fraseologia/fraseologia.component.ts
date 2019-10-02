@@ -13,7 +13,7 @@ export class FraseologiaComponent implements OnInit {
 
   ngOnInit() {
     this.fraseForm = new FormGroup({
-      'fraseOriginal' : new FormControl(null, [Validators.required]),
+      'fraseOriginal' : new FormControl('null', [Validators.required]),
       'fraseEquvalente' :  new FormControl('null', [Validators.required]),
       'exemploForiginal' : new FormControl('null', Validators.required),
       'exemploFequivalente' : new FormControl('null', Validators.required),

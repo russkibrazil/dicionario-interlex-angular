@@ -6,6 +6,7 @@ import { PalavrasComponent } from './palavras/palavras.component';
 import { CompartilhadoModule } from '../shared/shared.module';
 import { EquivalenteComponent } from './equivalente/equivalente.component';
 import { ReferenciasComponent } from './referencias/referencias.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 //import { ManutenComponent } from './manuten.component';
 
@@ -17,7 +18,8 @@ import { ReferenciasComponent } from './referencias/referencias.component';
         PalavraGuiaComponent,
         PalavrasComponent,
         EquivalenteComponent,
-        ReferenciasComponent
+        ReferenciasComponent,
+        UsuariosComponent
     ],
     providers: [],
 })
