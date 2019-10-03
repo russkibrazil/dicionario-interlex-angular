@@ -7,11 +7,12 @@ import { CompartilhadoModule } from '../shared/shared.module';
 import { EquivalenteComponent } from './equivalente/equivalente.component';
 import { ReferenciasComponent } from './referencias/referencias.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { ManutenRoutingModule } from './manuten-routing.module';
 
 //import { ManutenComponent } from './manuten.component';
 
 @NgModule({
-    imports: [ReactiveFormsModule, CompartilhadoModule],
+    imports: [ReactiveFormsModule, CompartilhadoModule, ManutenRoutingModule],
     exports: [],
     declarations: [
         FraseologiaComponent,

@@ -10,7 +10,7 @@ const routes: Routes = [
     {path: 'edit', component: PalavrasComponent},
     {path:':lng/:id/frase', component: FraseologiaComponent},
     {path: 'pguia', component: PalavraGuiaComponent},
-    {path: 'referencias', component: ReferenciasComponent},
+    {path: ':lng/referencias', component: ReferenciasComponent},
     {path: ':lng/:id/equivalencias', component: EquivalenteComponent}
 ]
 

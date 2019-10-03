@@ -14,10 +14,10 @@ export class ReferenciasComponent implements OnInit {
 
   ngOnInit() {
     this.referenciasForm = new FormGroup({
-      'codigo' : new FormControl('null', [Validators.required, Validators.pattern(/^[A-Z]+[A-Z]+[A-Z]?+[0-9]+[0-9]+[a-z]?$/)]),
+      'codigo' : new FormControl('null', [Validators.required, Validators.pattern(/^[A-Z]{2,3}[0-9]{2}[a-z]?$/)]),
       'autor' : new FormControl('null', Validators.required),
       'descricao' : new FormControl(),
-      'ano' : new FormControl('null', [Validators.required, Validators.pattern(/^[1-2]+[0-9]+[0-9]+[0-9]*$/)])
+      'ano' : new FormControl('null', [Validators.required, Validators.pattern(/^[1-2][0-9]{3}$/)])
     })
   }
 

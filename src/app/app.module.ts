@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BuscaModule } from './busca/busca.module';
 import { CompartilhadoModule } from './shared/shared.module';
+import { ManutenModule } from './manuten/manuten.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { CompartilhadoModule } from './shared/shared.module';
     BuscaModule,
     CommonModule,
     HttpClientModule,
-    CompartilhadoModule
+    CompartilhadoModule,
+    ManutenModule
   ],
   providers: [],
   bootstrap: [AppComponent]

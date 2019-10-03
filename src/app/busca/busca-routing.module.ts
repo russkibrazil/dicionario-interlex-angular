@@ -7,8 +7,7 @@ import { ApresentaResultadoEnComponent } from './apresenta-resultado-en/apresent
 const routes: Routes = [
     {path: '', component: BuscaComponent},
     {path: 'es/:id/:lema', component: ApresentaResultadoEsComponent},
-    {path: 'en/:id/:lema', component: ApresentaResultadoEnComponent},
-    {path: '**', component: BuscaComponent}
+    {path: 'en/:id/:lema', component: ApresentaResultadoEnComponent}
 ]
 
 @NgModule({
