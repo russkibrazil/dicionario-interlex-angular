@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Palavra } from 'src/app/models/Palavra';
 
 @Component({
   selector: 'app-palavras',
@@ -9,6 +10,20 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class PalavrasComponent implements OnInit {
   
   palavraForm : FormGroup;
+  generos = ['Masculino', 'Feminino', 'Neutro', 'Sem gênero', 'Masc/Fem'];
+  classesGramaticais = ["Artigo",
+  "Substantivo",
+  "Adjetivo",
+  "Advérbio",
+  "Preposição",
+  "Conjunção",
+  "Interjeição",
+  "Pronome",
+  "Verbo",
+  "Numeral",
+  "Substantivo-Adjetivo"];
+  idiomas = ['Português', 'Espanhol', 'Inglês'];
+  palavraAtiva : Palavra;
   
   constructor() { }
 
@@ -30,5 +45,9 @@ export class PalavrasComponent implements OnInit {
   }
   //https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/select
   //https://www.w3schools.com/html/html_form_elements.asp
+  //https://www.positronx.io/angular-7-select-dropdown-examples-with-reactive-forms/
+  //https://www.concretepage.com/angular/angular-select-option-reactive-form
+  onSubmit(){
 
+  }
 }

@@ -30,4 +30,6 @@ export class EquivalenteComponent implements OnInit {
     })
   }
 
+  onSubmit(){}
+
 }

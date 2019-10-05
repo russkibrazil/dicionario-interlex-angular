@@ -1,1 +1,50 @@
-<p>palavras works!</p>
+<div class="container">
+    <div class="row">
+        <form action="" [formGroup]="palavraForm" (ng-submit)="onSubmit()">
+            <div class="form-group">
+                <label for="lema">Lema</label>
+                <input id="lema" class="form-control" type="text" name="lema">
+            </div>
+            <div class="form-group">
+                <label for="idioma">Idioma</label>
+                <select formControlName="idioma">
+                    <option *ngFor="let idiom of idiomas" [ngValue]="idiom">{{idiom}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="classeGramatical">Classe Gramatical</label>
+                <select formControlName="classeGramatical">
+                    <option *ngFor="let cg of classesGramaticais" [ngValue]="cg">{{cg}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="genero">Gênero</label>
+                <select formControlName="genero">
+                    <option *ngFor="let gen of generos" [ngValue]="gen">{{gen}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="definicao">Definição</label>
+                <textarea id="definicao" class="form-control"  name="definicao" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="notasGramaticais">Notas gramaticais</label>
+                <textarea id="notasGramaticais" class="form-control" name="notasGramaticais" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="notasCulturais">Notas Culturais</label>
+                <textarea id="notasCulturais" class="form-control" name="notasCulturais" rows="3"></textarea>
+            </div>
+            <div *ngIf="palavraAtiva.idioma === 'ES'">
+                <div class="form-group">
+                    <label for="sinonimo1">Sinonimo 1</label>
+                    <input id="sinonimo1" class="form-control" type="text" name="sinonimo1">
+                </div>
+                <div class="form-group">
+                    <label for="sinonimo2">Sinônimo 2</label>
+                    <input id="sinonimo2" class="form-control" type="text" name="sinonimo2">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

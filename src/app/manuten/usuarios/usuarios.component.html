@@ -1,1 +1,43 @@
-<p>usuarios works!</p>
+<div class="container">
+    <div class="row">
+        <form method="" action="" [formGroup]="usuarioForm" (ng-submit)="onSubmit()">
+            <div class="form-group">
+                <label for="usuario">Nome de usuário</label>
+                <input id="usuario" class="form-control" type="text" name="usuario">
+            </div>
+            <div>
+                <div class="form-group">
+                    <label for="senha">Digite uma senha</label>
+                    <input id="senha" class="form-control" type="text" name="senha">
+                </div>
+                <div class="form-group">
+                    <label for="confirma-senha">Confirme a senha</label>
+                    <input id="confirma-senha" class="form-control" type="text" name="confirma-senha">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="permissao">Permissão de acesso</label>
+                <select formControlName="permissao">
+                    <option *ngFor="let p of permissoes" [ngValue]="p">{{p}}</option>
+                </select>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input id="nome" class="form-control" type="text" name="nome">
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input id="email" class="form-control" type="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="cpf">CPF</label>
+                <input id="cpf" class="form-control" type="text" name="cpf">
+            </div>
+            <div class="form-group">
+                <label for="telefone">Telefone</label>
+                <input id="telefone" class="form-control" type="text" name="telefone">
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,1 +1,38 @@
-<p>equivalente works!</p>
+<div class="container">
+    <div class="row">
+        <form action="" [formGroup]="equivalenteForm"] (ng-submit)="onSubmit()">
+            <div class="form-group">
+                <label for="lemaEquivalente">Lema Equivalente</label>
+                <input id="lemaEquivalente" class="form-control" type="text" name="lemaEquivalente">
+            </div>
+            <div class="form-group">
+                <label for="numApresentacao">Posição de apresentação</label>
+                <input id="numApresentacao" class="form-control" type="number" name="numApresentacao">
+            </div>
+            <div class="form-group">
+                <label for="exemploOriginal">Exemplo Original</label>
+                <input id="exemploOriginal" class="form-control" type="text" name="exemploOriginal">
+            </div>
+            <div class="form-group">
+                <label for="exemploEquivalente">Exemplo Equivalente</label>
+                <input id="exemploEquivalente" class="form-control" type="text" name="exemploEquivalente">
+            </div>
+            <div class="form-group">
+                <label for="palavraGuia">Palavras guia</label>
+                <input id="palavraGuia" class="form-control" type="text" name="palavraGuia">
+            </div>
+            <div class="form-group">
+                <label for="referencia">Referência Bibliográfica</label>
+                <input id="referencia" class="form-control" type="text" name="referencia">
+            </div>
+            <div class="form-group">
+                <label for="notasGramaticais">Notas gramaticais</label>
+                <textarea id="notasGramaticais" class="form-control" name="notasGramaticais" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="notasCulturais">Notas Culturais</label>
+                <textarea id="notasCulturais" class="form-control" name="notasCulturais" rows="3"></textarea>
+            </div>
+        </form>
+    </div>
+</div>

@@ -5,13 +5,15 @@ import { PalavraGuiaComponent } from './palavra-guia/palavra-guia.component';
 import { FraseologiaComponent } from './fraseologia/fraseologia.component';
 import { ReferenciasComponent } from './referencias/referencias.component';
 import { EquivalenteComponent } from './equivalente/equivalente.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 const routes: Routes = [
     {path: 'edit', component: PalavrasComponent},
     {path:':lng/:id/frase', component: FraseologiaComponent},
     {path: 'pguia', component: PalavraGuiaComponent},
     {path: ':lng/referencias', component: ReferenciasComponent},
-    {path: ':lng/:id/equivalencias', component: EquivalenteComponent}
+    {path: ':lng/:id/equivalencias', component: EquivalenteComponent},
+    {path: 'usuarios', component: UsuariosComponent}
 ]
 
 @NgModule({

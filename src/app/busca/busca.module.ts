@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { BuscaComponent } from './busca.component';
@@ -11,7 +10,7 @@ import { ApresentaResultadoEsComponent } from './apresenta-resultado-es/apresent
 import { CompartilhadoModule } from '../shared/shared.module';
 
 @NgModule({
-    imports: [CommonModule, BuscaRoutesModule, FormsModule, CompartilhadoModule],
+    imports: [ BuscaRoutesModule, FormsModule, CompartilhadoModule],
     exports: [],
     declarations: [
         BuscaComponent,

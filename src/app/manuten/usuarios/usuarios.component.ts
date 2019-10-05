@@ -9,6 +9,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class UsuariosComponent implements OnInit {
 
   usuarioForm : FormGroup;
+  permissoes = ['Administrador', 'Editor', 'Usuário'];
 
   constructor() { }
 
@@ -26,4 +27,5 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
+  onSubmit(){}
 }
