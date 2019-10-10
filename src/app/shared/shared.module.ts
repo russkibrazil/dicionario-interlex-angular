@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-
-import { MenuSuperiorComponent } from './menu-superior/menu-superior.component';
 import { CommonModule } from '@angular/common';
 
+import { MenuSuperiorComponent } from './menu-superior/menu-superior.component';
+import { AuthModule } from './auth/auth.module';
+
 @NgModule({
-    imports: [],
+    imports: [AuthModule],
     exports: [MenuSuperiorComponent, CommonModule],
     declarations: [MenuSuperiorComponent],
     providers: [],
