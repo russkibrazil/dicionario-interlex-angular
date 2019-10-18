@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MenuSuperiorComponent } from './menu-superior/menu-superior.component';
 import { AuthModule } from './auth/auth.module';
 
+
 @NgModule({
     imports: [AuthModule],
     exports: [MenuSuperiorComponent, CommonModule],

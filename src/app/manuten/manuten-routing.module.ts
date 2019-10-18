@@ -6,14 +6,15 @@ import { FraseologiaComponent } from './fraseologia/fraseologia.component';
 import { ReferenciasComponent } from './referencias/referencias.component';
 import { EquivalenteComponent } from './equivalente/equivalente.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { AuthGuard } from '../shared/auth/auth-guard.service';
 
 const routes: Routes = [
-    {path: 'edit', component: PalavrasComponent},
-    {path:':lng/:id/frase', component: FraseologiaComponent},
-    {path: 'pguia', component: PalavraGuiaComponent},
-    {path: ':lng/referencias', component: ReferenciasComponent},
-    {path: ':lng/:id/equivalencias', component: EquivalenteComponent},
-    {path: 'usuarios', component: UsuariosComponent}
+    {path: 'edit', component: PalavrasComponent, canActivate:[AuthGuard]},
+    {path:':lng/:id/frase', component: FraseologiaComponent, canActivate:[AuthGuard]},
+    {path: 'pguia', component: PalavraGuiaComponent, canActivate:[AuthGuard]},
+    {path: ':lng/referencias', component: ReferenciasComponent, canActivate:[AuthGuard]},
+    {path: ':lng/:id/equivalencias', component: EquivalenteComponent, canActivate:[AuthGuard]},
+    {path: 'usuarios', component: UsuariosComponent, canActivate:[AuthGuard]}
 ]
 
 @NgModule({

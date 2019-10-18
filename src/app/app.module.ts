@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { BuscaModule } from './busca/busca.module';
 import { CompartilhadoModule } from './shared/shared.module';
 import { ManutenModule } from './manuten/manuten.module';
+import { AuthService } from './shared/auth/auth.service';
+import { AuthGuard } from './shared/auth/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,7 @@ import { ManutenModule } from './manuten/manuten.module';
     CompartilhadoModule,
     ManutenModule
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

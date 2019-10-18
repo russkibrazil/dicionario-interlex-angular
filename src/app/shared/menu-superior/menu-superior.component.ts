@@ -15,4 +15,8 @@ export class MenuSuperiorComponent implements OnInit {
   onClickEntrar(){
     this.router.navigate(['/','login']);
   }
+  onClickHome(){}
+  onClickBuscar(){
+    this.router.navigate(['/']);
+  }
 }

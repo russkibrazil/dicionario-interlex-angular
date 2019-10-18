@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
-        <div class="d-flex flex-column">
-            <form action="" [formGroup]="aForm" (ng-submit)="onSubmit()">
+        <div class="col-sm-12">
+            <form [formGroup]="aForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label for="usuario">Usuário</label>
                     <input id="usuario" class="form-control" type="text" name="usuario">
