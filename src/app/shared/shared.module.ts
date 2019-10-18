@@ -6,7 +6,7 @@ import { AuthModule } from './auth/auth.module';
 
 
 @NgModule({
-    imports: [AuthModule],
+    imports: [AuthModule, CommonModule],
     exports: [MenuSuperiorComponent, CommonModule],
     declarations: [MenuSuperiorComponent],
     providers: [],

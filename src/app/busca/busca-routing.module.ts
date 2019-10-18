@@ -5,7 +5,7 @@ import { ApresentaResultadoEsComponent } from './apresenta-resultado-es/apresent
 import { ApresentaResultadoEnComponent } from './apresenta-resultado-en/apresenta-resultado-en.component';
 
 const routes: Routes = [
-    {path: '', component: BuscaComponent},
+    {path: 'b', component: BuscaComponent},
     {path: 'es/:id/:lema', component: ApresentaResultadoEsComponent},
     {path: 'en/:id/:lema', component: ApresentaResultadoEnComponent}
 ]

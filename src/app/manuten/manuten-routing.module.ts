@@ -9,12 +9,15 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { AuthGuard } from '../shared/auth/auth-guard.service';
 
 const routes: Routes = [
-    {path: 'edit', component: PalavrasComponent, canActivate:[AuthGuard]},
-    {path:':lng/:id/frase', component: FraseologiaComponent, canActivate:[AuthGuard]},
-    {path: 'pguia', component: PalavraGuiaComponent, canActivate:[AuthGuard]},
-    {path: ':lng/referencias', component: ReferenciasComponent, canActivate:[AuthGuard]},
-    {path: ':lng/:id/equivalencias', component: EquivalenteComponent, canActivate:[AuthGuard]},
-    {path: 'usuarios', component: UsuariosComponent, canActivate:[AuthGuard]}
+    {path: 'm', canActivateChild:[AuthGuard], children:[
+        {path: 'edit', component: PalavrasComponent , children:[
+            {path: 'equivalencias', component: EquivalenteComponent},
+            {path: 'frase', component: FraseologiaComponent}
+        ]},
+        {path: 'pguia', component: PalavraGuiaComponent},
+        {path: 'referencias', component: ReferenciasComponent},
+        {path: 'usuarios', component: UsuariosComponent}
+    ]}
 ]
 
 @NgModule({

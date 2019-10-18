@@ -4,7 +4,7 @@ import { BuscaComponent } from './busca/busca.component';
 
 
 const routes: Routes = [
-  {path: '', component:BuscaComponent, pathMatch: 'full'}
+  {path: '', pathMatch: 'full' ,redirectTo:'/b'}
 ];
 
 @NgModule({

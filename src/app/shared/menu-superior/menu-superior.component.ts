@@ -12,11 +12,17 @@ export class MenuSuperiorComponent implements OnInit {
 
   ngOnInit() {
   }
-  onClickEntrar(){
-    this.router.navigate(['/','login']);
+  onClickPalavras(){
+    this.router.navigate(['m/edit']);
   }
   onClickHome(){}
   onClickBuscar(){
-    this.router.navigate(['/']);
+    this.router.navigate(['b']);
+  }
+  onClickUsuarios(){
+    this.router.navigate(['m/usuarios']);
+  }
+  onClickReferencias(){
+    this.router.navigate(['m/referencias']);
   }
 }
