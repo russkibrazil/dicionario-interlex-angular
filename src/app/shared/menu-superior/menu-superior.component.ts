@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
+import { MySqlConnectorService } from '../mysql/mysql.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu-superior',
@@ -8,8 +10,9 @@ import { Router } from '@angular/router';
 })
 export class MenuSuperiorComponent implements OnInit {
 
-  constructor(private router:Router) { }
 
+  constructor(private router:Router, private banco:MySqlConnectorService) { }
+  subs : Subscription;
   ngOnInit() {
   }
   onClickPalavras(){
@@ -24,5 +27,9 @@ export class MenuSuperiorComponent implements OnInit {
   }
   onClickReferencias(){
     this.router.navigate(['m/referencias']);
+  }
+
+  onClickTeste(){
+   this.banco.readOperation().subscribe();
   }
 }

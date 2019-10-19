@@ -19,18 +19,17 @@ import { Palavra } from 'src/app/models/Palavra';
 
 @Injectable({providedIn: 'root'})
 export class MySqlConnectorService {
-    private readonly baseUrl = 'http://localhost/shared/mysql/';
+    private readonly baseUrl = 'http://localhost:8080/api/records';
     
     constructor(private httpClient: HttpClient) { }
     
-    readOperation(pacote : MysqlBasePackage) : Observable<Palavra[]>{
+    readOperation() : Observable<any> {
         let palavra : Palavra[];
         
-        return this.httpClient.post(`${this.baseUrl}`, {data: pacote})
-            .pipe(map((res) => {
-                palavra.push(res['data']);
-                return palavra;
-            }));
+        return this.httpClient.get((this.baseUrl + '/usr'),{
+            observe: 'body',
+            responseType: 'json'
+        });
 
     }
 }
