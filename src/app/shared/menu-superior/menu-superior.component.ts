@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { MySqlConnectorService } from '../mysql/mysql.service';
 import { Subscription } from 'rxjs';
+import { Usuario } from 'src/app/models/Usuario';
 
 @Component({
   selector: 'app-menu-superior',
@@ -30,6 +31,8 @@ export class MenuSuperiorComponent implements OnInit {
   }
 
   onClickTeste(){
-   this.banco.readOperation().subscribe();
+   // let dados = JSON.stringify(entra);
+   // this.banco.createOperation('usr',dados).subscribe();
+   //this.banco.readOperation('usr').subscribe();
   }
 }

@@ -1,15 +1,15 @@
 export class Referencia{
-    public id : number;
+    public Id : number;
     public Cod : string;
-    public descricao : string;
-    public ano : number;
-    public autor : string;
+    public Descricao : string;
+    public Ano : number;
+    public Autor : string;
 
     constructor(id : number, cod : string, desc : string, ano: number, autor : string){
-        this.id = id;
+        this.Id = id;
         this.Cod = cod;
-        this.descricao = desc;
-        this.ano = ano;
-        this.autor = autor;
+        this.Descricao = desc;
+        this.Ano = ano;
+        this.Autor = autor;
     }
 }
