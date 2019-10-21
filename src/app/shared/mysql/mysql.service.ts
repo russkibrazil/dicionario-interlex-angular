@@ -11,26 +11,51 @@
     https://www.techiediaries.com/angular-httpclient/
 */
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MysqlBasePackage } from './mysql-BasePackage';
-import { Palavra } from 'src/app/models/Palavra';
 
 @Injectable({providedIn: 'root'})
 export class MySqlConnectorService {
-    private readonly baseUrl = 'http://localhost/shared/mysql/';
+    private readonly baseUrl = 'http://localhost:8080/api/records';
     
     constructor(private httpClient: HttpClient) { }
     
-    readOperation(pacote : MysqlBasePackage) : Observable<Palavra[]>{
-        let palavra : Palavra[];
+    readOperationPk(tabela:string, registro?:number[]) : Observable<any> {
+        let site : string = (this.baseUrl + '/' + tabela );
+        if (registro){
+            let sreg : string = registro.splice(0,1).toString();
+            registro.forEach(el => {
+                sreg.concat(',', el.toString());
+            });
+            site =  '/' + sreg;
+        }
         
-        return this.httpClient.post(`${this.baseUrl}`, {data: pacote})
-            .pipe(map((res) => {
-                palavra.push(res['data']);
-                return palavra;
-            }));
+        return this.httpClient.get(site,{
+            observe: 'body',
+            responseType: 'json'
+        });
+    }
 
+    createOperation(tabela:string, dados:string) : Observable<any> {
+        return this.httpClient.post((this.baseUrl + '/' + tabela), dados);
+    }
+
+    updateOperation(tabela:string, dados:string, filtro:string[]): Observable<any> {
+        let target : string = this.baseUrl + '/' + tabela + '?';
+        target.concat(...filtro);
+        return this.httpClient.put(target, dados);
+    }
+
+    updateOperationPk(tabela:string, dados:string, filtro:string[]): Observable<any> {
+        let target : string = this.baseUrl + '/' + tabela + '?';
+        target.concat(...filtro);
+        return this.httpClient.put(target, dados);
+    }
+
+    deleteOperation(tabela:string, filtro:string[]) : Observable<any>{
+        let target : string = this.baseUrl + '/' + tabela + '?';
+        target.concat(...filtro);
+        return this.httpClient.delete(target);
     }
 }
