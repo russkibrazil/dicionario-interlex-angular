@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {MysqlBasePackage} from '../../shared/mysql/mysql-BasePackage';
 import { MySqlConnectorService } from 'src/app/shared/mysql/mysql.service';
 import { Palavra } from 'src/app/models/Palavra';
 

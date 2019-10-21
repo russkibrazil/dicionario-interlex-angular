@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="row">
-        <div class="col-sm-12">
+    <div class="row justify-content-center">
+        <div class="col-sm">
             <form action="" [formGroup]="referenciasForm" (ng-submit)="onSubmit()">
                 <div class="form-group">
                     <label for="codigo">Código da Referência</label>
@@ -19,6 +19,9 @@
                     <input id="ano" class="form-control" type="number" name="ano">
                 </div>
             </form>
+        </div>
+        <div class="col-sm-1">
+            <app-botoes-controle></app-botoes-controle>
         </div>
     </div>
 </div>

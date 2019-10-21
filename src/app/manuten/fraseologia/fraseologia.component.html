@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="row">
-        <div class="col-sm-12">
+    <div class="row justify-content-center">
+        <div class="col-sm">
             <form [formGroup]=fraseForm (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label for="fraseOriginal">Frase Original</label>
@@ -31,6 +31,9 @@
                 
                 <button class="btn btn-primary" type="submit">Salvar</button>
             </form>
+        </div>
+        <div class="col-sm-1">
+            <app-botoes-controle></app-botoes-controle>
         </div>
     </div>
 </div>

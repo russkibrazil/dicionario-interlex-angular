@@ -21,7 +21,7 @@ export class AuthFormComponent implements OnInit {
 
   onSubmit(){
     this.authSvc.login();
-    this.router.navigate(['edit']);
+    this.router.navigate(['m/edit']);
   }
   
 }

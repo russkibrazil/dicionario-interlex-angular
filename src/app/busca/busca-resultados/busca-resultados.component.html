@@ -5,11 +5,11 @@
         <div 
             *ngFor="let palavra of resultados" 
             (click)="onClickElemento('es', palavra.id, palavra.lema)"
-            class="col-xs-3"
+            class="col-sm-3"
         >
             <p>{{palavra.lema}}</p>
         </div>
-        <div class="col-xs-9">
+        <div class="col-sm-9">
             <div class="col-sm-12"
                 *ngFor="let palavra of resultados" 
                 (click)="onClickElemento()"
@@ -23,7 +23,7 @@
         <div 
             *ngFor="let palavra of resultados" 
             (click)="onClickElemento('en', palavra.id, palavra.lema)"
-            class="col-xs-12"
+            class="col-sm-12"
         >
             <h5>{{palavra.lema}}</h5>
             <p>{{palavra.Definicao}}</p>
