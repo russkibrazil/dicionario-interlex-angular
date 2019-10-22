@@ -7,12 +7,14 @@ import { ReferenciasComponent } from './referencias/referencias.component';
 import { EquivalenteComponent } from './equivalente/equivalente.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { AuthGuard } from '../shared/auth/auth-guard.service';
+import { ConjugacaoPt } from '../models/ConjugacaoPt';
 
 const routes: Routes = [
     {path: 'm', canActivateChild:[AuthGuard], children:[
         {path: 'edit', component: PalavrasComponent , children:[
             {path: 'equivalencias', component: EquivalenteComponent},
-            {path: 'frase', component: FraseologiaComponent}
+            {path: 'frase', component: FraseologiaComponent},
+            {path: 'conjugacoes', component: ConjugacaoPt}
         ]},
         {path: 'pguia', component: PalavraGuiaComponent},
         {path: 'referencias', component: ReferenciasComponent},

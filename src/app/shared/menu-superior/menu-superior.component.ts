@@ -12,7 +12,6 @@ export class MenuSuperiorComponent implements OnInit {
 
 
   constructor(private router:Router, private banco:MySqlConnectorService) { }
-  subs : Subscription;
   ngOnInit() {
   }
   onClickPalavras(){
@@ -27,5 +26,8 @@ export class MenuSuperiorComponent implements OnInit {
   }
   onClickReferencias(){
     this.router.navigate(['m/referencias']);
+  }
+  onClickEntrar(){
+    this.router.navigate(['login']);
   }
 }

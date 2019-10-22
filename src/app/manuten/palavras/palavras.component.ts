@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Palavra } from 'src/app/models/Palavra';
+import {  Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-palavras',
@@ -25,7 +27,7 @@ export class PalavrasComponent implements OnInit {
   idiomas = ['Português', 'Espanhol', 'Inglês'];
   palavraAtiva : Palavra;
   
-  constructor() { }
+  constructor(private router:Router, private route:ActivatedRoute) { }
 
   ngOnInit() {
     this.palavraForm = new FormGroup({
@@ -49,5 +51,15 @@ export class PalavrasComponent implements OnInit {
   //https://www.concretepage.com/angular/angular-select-option-reactive-form
   onSubmit(){
 
+  }
+
+  onClickEquivalentes(){
+    this.router.navigate(['equivalencias'],{relativeTo: this.route});
+  }
+  onClickFraseologia(){
+    this.router.navigate(['frase'],{relativeTo: this.route});
+  }
+  onClickConjugacoes(){
+    this.router.navigate(['conjugacoes'],{relativeTo: this.route});
   }
 }
