@@ -37,6 +37,12 @@ export class MySqlConnectorService {
         });
     }
 
+    readOperationFiltered(tabela:string, filtro:string[]):Observable<any>{
+        let site : string = (this.baseUrl + '/' + tabela + '?');
+        site.concat(...filtro);
+        return this.httpClient.get(site);
+    }
+
     createOperation(tabela:string, dados:string) : Observable<any> {
         return this.httpClient.post((this.baseUrl + '/' + tabela), dados);
     }
