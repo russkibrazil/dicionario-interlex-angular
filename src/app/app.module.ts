@@ -9,6 +9,7 @@ import { CompartilhadoModule } from './shared/shared.module';
 import { ManutenModule } from './manuten/manuten.module';
 import { AuthService } from './shared/auth/auth.service';
 import { AuthGuard } from './shared/auth/auth-guard.service';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AuthGuard } from './shared/auth/auth-guard.service';
     CommonModule,
     HttpClientModule,
     CompartilhadoModule,
-    ManutenModule
+    ManutenModule,
+    StoreModule.forRoot()
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
