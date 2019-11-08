@@ -1,5 +1,10 @@
 import * as EquivalenteActions from './equivalente.actions';
 import { Equivalente } from 'src/app/models/Equivalente';
+import * as fromApp from './app.reducer';
+
+export interface FeatureState extends fromApp.AppState{
+    equivalente: State
+}
 
 export interface State{
     equivalente: Equivalente[];

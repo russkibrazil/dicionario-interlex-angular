@@ -1,6 +1,10 @@
 import * as FraseologiaActions from './fraseologia.actions';
 import { Fraseologia } from 'src/app/models/Fraseologia';
+import * as fromApp from './app.reducer';
 
+export interface FeatureState extends fromApp.AppState{
+   fraseologia : State
+}
 export interface State{
     fraseologia: Fraseologia[];
 }

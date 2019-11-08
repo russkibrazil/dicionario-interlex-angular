@@ -10,6 +10,7 @@ import { ManutenModule } from './manuten/manuten.module';
 import { AuthService } from './shared/auth/auth.service';
 import { AuthGuard } from './shared/auth/auth-guard.service';
 import { StoreModule } from '@ngrx/store';
+import { reducers } from './shared/store/app.reducer';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { StoreModule } from '@ngrx/store';
     HttpClientModule,
     CompartilhadoModule,
     ManutenModule,
-    StoreModule.forRoot()
+    StoreModule.forRoot(reducers)
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]

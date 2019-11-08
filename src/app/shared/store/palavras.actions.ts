@@ -30,7 +30,7 @@ export class DeletePalavra implements Action{
 
 export class FetchPalavra implements Action{
     readonly type = FETCH_PALAVRA;
-    constructor(public payload:Palavra){}
+    constructor(public payload:string){}
 }
 
 export class StorePalavra implements Action{
