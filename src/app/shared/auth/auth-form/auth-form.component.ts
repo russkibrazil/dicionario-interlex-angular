@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../../store/app.reducer';
+import * as AuthActions from '../store/auth.actions';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-auth-form',
@@ -10,7 +14,7 @@ import { AuthService } from '../auth.service';
 })
 export class AuthFormComponent implements OnInit {
   aForm : FormGroup;
-  constructor(private router: Router, private authSvc : AuthService) { }
+  constructor(private router: Router, private authSvc : AuthService, private store: Store<fromApp.AppState> ) { }
 
   ngOnInit() {
     this.aForm = new FormGroup({
@@ -20,8 +24,11 @@ export class AuthFormComponent implements OnInit {
   }
 
   onSubmit(){
-    this.authSvc.login();
-    this.router.navigate(['m/edit']);
+    const u = this.aForm.value['usuario'];
+    const p = this.aForm.value['senha'];
+   // this.authSvc.login();
+    this.store.dispatch(new AuthActions.TrySignin({username: u, password: p}));
+    //this.router.navigate(['m/edit']);
   }
   
 }
