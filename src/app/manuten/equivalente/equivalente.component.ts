@@ -32,4 +32,43 @@ export class EquivalenteComponent implements OnInit {
 
   onSubmit(){}
 
+  sideButtonClicked(evento:{tipo:string}){
+    const ev = evento.tipo;
+    switch (ev){
+      case 'novo':
+        if (this.equivalenteForm.dirty){
+          this.equivalenteForm.value['equivalente'] = '';
+          this.equivalenteForm.value['telefone'] = '';
+          this.equivalenteForm.value['email'] = '';
+          this.equivalenteForm.value['nome'] = '';
+          this.equivalenteForm.value['cpf'] = '';
+          this.equivalenteForm.value['permissao'] = 'EDT';
+          this.equivalenteForm.value['entrasenha'] = '';
+        }
+      break;
+      case 'salvar':
+        if (this.equivalenteForm.touched){
+          console.log('salvar');
+        }
+      break;
+      case 'apagar':
+        console.log('apagar');
+      break;
+      case 'primeiro':
+        console.log('primeiro');
+      break;
+      case 'anterior':
+        console.log('anterior');
+      break;
+      case 'proximo':
+        console.log('proximo');
+      break;
+      case 'ultimo':
+        console.log('ultimo');
+      break;
+      default:
+        break;
+    }
+  }
+
 }

@@ -28,4 +28,43 @@ export class UsuariosComponent implements OnInit {
   }
 
   onSubmit(){}
+
+  sideButtonClicked(evento:{tipo:string}){
+    const ev = evento.tipo;
+    switch (ev){
+      case 'novo':
+        if (this.usuarioForm.dirty){
+          this.usuarioForm.value['usuario'] = '';
+          this.usuarioForm.value['telefone'] = '';
+          this.usuarioForm.value['email'] = '';
+          this.usuarioForm.value['nome'] = '';
+          this.usuarioForm.value['cpf'] = '';
+          this.usuarioForm.value['permissao'] = 'EDT';
+          this.usuarioForm.value['entrasenha'] = '';
+        }
+      break;
+      case 'salvar':
+        if (this.usuarioForm.touched){
+          console.log('salvar');
+        }
+      break;
+      case 'apagar':
+        console.log('apagar');
+      break;
+      case 'primeiro':
+        console.log('primeiro');
+      break;
+      case 'anterior':
+        console.log('anterior');
+      break;
+      case 'proximo':
+        console.log('proximo');
+      break;
+      case 'ultimo':
+        console.log('ultimo');
+      break;
+      default:
+        break;
+    }
+  }
 }

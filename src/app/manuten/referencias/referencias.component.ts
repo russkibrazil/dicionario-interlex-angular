@@ -22,4 +22,42 @@ export class ReferenciasComponent implements OnInit {
   }
 
   onSubmit(){}
+  sideButtonClicked(evento:{tipo:string}){
+    const ev = evento.tipo;
+    switch (ev){
+      case 'novo':
+        if (this.referenciasForm.dirty){
+          this.referenciasForm.value['referencias'] = '';
+          this.referenciasForm.value['telefone'] = '';
+          this.referenciasForm.value['email'] = '';
+          this.referenciasForm.value['nome'] = '';
+          this.referenciasForm.value['cpf'] = '';
+          this.referenciasForm.value['permissao'] = 'EDT';
+          this.referenciasForm.value['entrasenha'] = '';
+        }
+      break;
+      case 'salvar':
+        if (this.referenciasForm.touched){
+          console.log('salvar');
+        }
+      break;
+      case 'apagar':
+        console.log('apagar');
+      break;
+      case 'primeiro':
+        console.log('primeiro');
+      break;
+      case 'anterior':
+        console.log('anterior');
+      break;
+      case 'proximo':
+        console.log('proximo');
+      break;
+      case 'ultimo':
+        console.log('ultimo');
+      break;
+      default:
+        break;
+    }
+  }
 }

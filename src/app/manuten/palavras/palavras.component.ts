@@ -62,4 +62,43 @@ export class PalavrasComponent implements OnInit {
   onClickConjugacoes(){
     this.router.navigate(['conjugacoes'],{relativeTo: this.route});
   }
+  
+  sideButtonClicked(evento:{tipo:string}){
+    const ev = evento.tipo;
+    switch (ev){
+      case 'novo':
+        if (this.palavraForm.dirty){
+          this.palavraForm.value['palavra'] = '';
+          this.palavraForm.value['telefone'] = '';
+          this.palavraForm.value['email'] = '';
+          this.palavraForm.value['nome'] = '';
+          this.palavraForm.value['cpf'] = '';
+          this.palavraForm.value['permissao'] = 'EDT';
+          this.palavraForm.value['entrasenha'] = '';
+        }
+      break;
+      case 'salvar':
+        if (this.palavraForm.touched){
+          console.log('salvar');
+        }
+      break;
+      case 'apagar':
+        console.log('apagar');
+      break;
+      case 'primeiro':
+        console.log('primeiro');
+      break;
+      case 'anterior':
+        console.log('anterior');
+      break;
+      case 'proximo':
+        console.log('proximo');
+      break;
+      case 'ultimo':
+        console.log('ultimo');
+      break;
+      default:
+        break;
+    }
+  }
 }
