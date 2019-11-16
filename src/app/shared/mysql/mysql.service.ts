@@ -39,7 +39,7 @@ export class MySqlConnectorService {
 
     readOperationFiltered(tabela:string, filtro:string[]):Observable<any>{
         let site : string = (this.baseUrl + '/' + tabela + '?');
-        site.concat(...filtro);
+        site = site.concat(...filtro);
         return this.httpClient.get(site);
     }
 
@@ -49,19 +49,19 @@ export class MySqlConnectorService {
 
     updateOperation(tabela:string, dados:string, filtro:string[]): Observable<any> {
         let target : string = this.baseUrl + '/' + tabela + '?';
-        target.concat(...filtro);
+        target = target.concat(...filtro);
         return this.httpClient.put(target, dados);
     }
 
     updateOperationPk(tabela:string, dados:string, filtro:string[]): Observable<any> {
         let target : string = this.baseUrl + '/' + tabela + '?';
-        target.concat(...filtro);
+        target = target.concat(...filtro);
         return this.httpClient.put(target, dados);
     }
 
     deleteOperation(tabela:string, filtro:string[]) : Observable<any>{
         let target : string = this.baseUrl + '/' + tabela + '?';
-        target.concat(...filtro);
+        target = target.concat(...filtro);
         return this.httpClient.delete(target);
     }
 }

@@ -10,7 +10,9 @@ import { ManutenModule } from './manuten/manuten.module';
 import { AuthService } from './shared/auth/auth.service';
 import { AuthGuard } from './shared/auth/auth-guard.service';
 import { StoreModule } from '@ngrx/store';
-import { reducers } from './shared/store/app.reducer';
+import { authReducer } from './shared/auth/store/auth.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffect } from './shared/auth/store/auth.effects';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { reducers } from './shared/store/app.reducer';
     HttpClientModule,
     CompartilhadoModule,
     ManutenModule,
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot({auth: authReducer}),
+    EffectsModule.forRoot([AuthEffect])
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]

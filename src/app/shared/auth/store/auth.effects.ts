@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Router } from '@angular/router';
 import {Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { switchMap, map, catchError,withLatestFrom } from 'rxjs/operators';
+import { switchMap, map, catchError,withLatestFrom,exhaustMap } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { MySqlConnectorService } from '../../mysql/mysql.service';
 import * as fromApp from '../../store/app.reducer';
@@ -11,19 +11,19 @@ import { GeradorFiltro } from '../../mysql/geradorFiltro';
 import { AuthService } from '../auth.service';
 
 @Injectable()
-export class PalavrasEffect{
-    tryingSignin$ = createEffect(() => this.actions$.pipe(
-        ofType(AuthAction.TRY_SIGNIN),
-        switchMap((authData:{username: string, password:string}) => {
-            return this.mysql.readOperationFiltered('usuarios',[GeradorFiltro.igual('usr', authData.username), GeradorFiltro.igual('pass',authData.password)])
-        }),
-        map((usuario) =>{
-            this.router.navigate(['m/edit']);
-            this.authService.login();
-            return {type: AuthAction.SIGNIN,
-            payload: usuario.nivel_permissao}
-        }),
-        catchError(()=>EMPTY)
+export class AuthEffect{
+    tryingSignin$ = createEffect(() => 
+        this.actions$.pipe(
+           ofType(AuthAction.TRY_SIGNIN),
+                exhaustMap(action => 
+                this.mysql.readOperationFiltered('usr',['filter=' + GeradorFiltro.igual('usr', action.username), GeradorFiltro.filtroAnd() + GeradorFiltro.igual('pass',action.password)]).pipe(
+                    map(usuario => {
+                        this.authService.login('EDT');
+                        this.router.navigate(['m/edit']);
+                        return AuthAction.SIGNIN
+                    })
+                )
+            )
         )
     );
 
