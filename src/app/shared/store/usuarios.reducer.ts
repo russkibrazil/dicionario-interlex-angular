@@ -1,35 +1,45 @@
 import * as UsuariosActions from './usuarios.actions';
 import { Usuario } from 'src/app/models/Usuario';
 import * as fromApp from './app.reducer';
-
-export interface FeatureState extends fromApp.AppState{
-    usuario: State
-}
+import { createReducer, on } from '@ngrx/store';
 
 export interface State{
     usuario: Usuario[];
 }
 
-export const initialState = [];
+export const initialState : State = {
+    usuario: []
+};
 
-export function usuarioReducer(state = initialState, action:UsuariosActions.UsuarioActions){
-    switch (action.type){
-        case (UsuariosActions.ADD_USUARIO):
+const _usuarioReducer = createReducer( initialState,
+    on(UsuariosActions.ADD_USUARIO,
+        (state, {payload}) => (
+            {...state, usuario: [...state.usuario, payload]}
+        )
+    ),
+    on(UsuariosActions.SET_USUARIO,
+        (state, {payload}) => (
+            {...state, equivalente: payload}
+        )
+    ),
+    on(UsuariosActions.UPDATE_USUARIO,
+        (state, {payload, updateOn}) => {
+            let u = state.usuario;
+            const du = u.findIndex(r => updateOn === r);
+            u.splice(du,1);
+            u.push(payload);
+            return {...state, usuario: u}
+        }
+    ),
+    on(UsuariosActions.DELETE_USUARIO,
+        (state, {payload}) => {
+            let d = state.usuario;
+            const di = d.findIndex(r => payload === r);
+            d.splice(di,1);
+            return {...state, usuario: d}
+        })
+);
 
-            return [...state, action.payload]
-        case (UsuariosActions.SET_USUARIO): 
-            return [...state, action.payload];
-        case (UsuariosActions.UPDATE_USUARIO):
-            const idx = initialState.indexOf(action.payload.old);
-            let usuarios = initialState;
-            usuarios[idx] = action.payload.new;
-            return [...state, usuarios];
-        case (UsuariosActions.DELETE_USUARIO):
-            const ix = initialState.indexOf(action.payload);
-            let usuariosD = initialState;
-            usuariosD.splice(ix,1);
-            return [...state,usuariosD];
-        default:
-            return state;
-    }
+export function usuarioReducer(state, action) {
+    return _usuarioReducer(state, action);
 }

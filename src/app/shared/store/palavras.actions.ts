@@ -1,41 +1,33 @@
-import {Action} from '@ngrx/store';
+import {createAction, props} from '@ngrx/store';
 import {Palavra} from '../../models/Palavra';
+import { RespostaErroMySql } from '../mysql/resposta';
 
-export const ADD_PALAVRA = 'ADD_PALAVRA'
-export const SET_PALAVRA = 'SET_PALAVRA';
-export const UPDATE_PALAVRA = 'UPDATE_PALAVRA';
-export const DELETE_PALAVRA = 'DELETE_PALAVRA';
-export const FETCH_PALAVRA = 'FETCH_PALAVRA';
-export const STORE_PALAVRA = 'STORE_PALAVRA';
-
-export class AddPalavra implements Action{
-    readonly type = ADD_PALAVRA;
-    constructor(public payload:Palavra){}
-}
-
-export class SetPalavra implements Action{
-    readonly type = SET_PALAVRA;
-    constructor(public payload:Palavra){}
-}
-
-export class UpdatePalavra implements Action{
-    readonly type = UPDATE_PALAVRA;
-    constructor(public payload:{old: Palavra, new: Palavra}){}
-}
-
-export class DeletePalavra implements Action{
-    readonly type = DELETE_PALAVRA;
-    constructor(public payload:Palavra){}
-}
-
-export class FetchPalavra implements Action{
-    readonly type = FETCH_PALAVRA;
-    constructor(public payload:string){}
-}
-
-export class StorePalavra implements Action{
-    readonly type = STORE_PALAVRA;
-    constructor(public payload:Palavra){}
-}
-
-export type PalavrasActions = AddPalavra | SetPalavra | UpdatePalavra | DeletePalavra | FetchPalavra | StorePalavra;
+export const ADD_PALAVRA = createAction(
+    'ADD_PALAVRA',
+    props<{payload: Palavra}>()
+);
+export const SET_PALAVRA = createAction(
+    'SET_PALAVRA',
+    props<{payload: Palavra[]}>()
+);
+export const UPDATE_PALAVRA = createAction(
+    'UPDATE_PALAVRA',
+    props<{payload: Palavra, updateOn: Palavra}>()
+);
+export const DELETE_PALAVRA = createAction(
+    'DELETE_PALAVRA',
+    props<{payload: Palavra}>()
+);
+export const ATIVAR_PALAVRA = createAction(
+    'ATIVAR_PALAVRA',
+    props<{payload: Palavra}>()
+);
+export const FETCH_PALAVRA = createAction(
+    'FETCH_PALAVRA',
+    props<{filters: string[]}>()
+);
+export const STORE_PALAVRA = createAction('STORE_PALAVRA');
+export const FETCH_PALAVRA_FAIL = createAction(
+    'FETCH_PALAVRA_FAIL',
+    props<{payload: RespostaErroMySql<Palavra>}>()
+)

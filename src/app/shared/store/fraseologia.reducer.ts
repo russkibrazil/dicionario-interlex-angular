@@ -1,34 +1,45 @@
 import * as FraseologiaActions from './fraseologia.actions';
 import { Fraseologia } from 'src/app/models/Fraseologia';
-import * as fromApp from './app.reducer';
+import { createReducer, on } from '@ngrx/store';
 
-export interface FeatureState extends fromApp.AppState{
-   fraseologia : State
-}
 export interface State{
     fraseologia: Fraseologia[];
 }
 
-export const initialState = [];
+export const initialState :State = {
+    fraseologia: []
+};
 
-export function fraseologiaReducer(state = initialState, action:FraseologiaActions.FraseologiaActions){
-    switch (action.type){
-        case (FraseologiaActions.ADD_FRASEOLOGIA):
+export const _fraseologiaReducer = createReducer( initialState,
+    on(FraseologiaActions.ADD_FRASEOLOGIA,
+        (state, {payload}) => (
+            {...state, fraseologia: [...state.fraseologia, payload]}
+        )
+    ),
+    on(FraseologiaActions.SET_FRASEOLOGIA,
+        (state, {payload}) => (
+            {...state, fraseologia: payload}
+        )
+    ),
+    on(FraseologiaActions.UPDATE_FRASEOLOGIA,
+        (state, {payload, updateOn}) => {
+            let u = state.fraseologia;
+            const du = u.findIndex(r => updateOn === r);
+            u.splice(du, 1);
+            u.push(payload);
+            return {...state, fraseologia: u}
+        }
+    ),
+    on(FraseologiaActions.DELETE_FRASEOLOGIA,
+        (state, {payload}) => {
+            let d = state.fraseologia;
+            const di = d.findIndex(r => payload === r);
+            d.splice(di, 1);
+            return {...state, fraseologia: d}
+        }
+    )
+);
 
-            return [...state, action.payload]
-        case (FraseologiaActions.SET_FRASEOLOGIA): 
-            return [...state, action.payload];
-        case (FraseologiaActions.UPDATE_FRASEOLOGIA):
-            const idx = initialState.indexOf(action.payload.old);
-            let fraseologia = initialState;
-            fraseologia[idx] = action.payload.new;
-            return [...state, fraseologia];
-        case (FraseologiaActions.DELETE_FRASEOLOGIA):
-            const ix = initialState.indexOf(action.payload);
-            let fraseologiaD = initialState;
-            fraseologiaD.splice(ix,1);
-            return [...state,fraseologiaD];
-        default:
-            return state;
-    }
+export function fraseologiaReducer(state,action) {
+    return _fraseologiaReducer(state, action);
 }

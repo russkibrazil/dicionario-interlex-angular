@@ -1,25 +1,29 @@
 import { Injectable } from "@angular/core";
 import {Actions, createEffect, ofType } from '@ngrx/effects';
 import * as ActionPalavra from './palavras.actions';
-import { switchMap, map, catchError,withLatestFrom } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
+import { exhaustMap, map, catchError} from 'rxjs/operators';
+import { of } from 'rxjs';
 import { MySqlConnectorService } from '../mysql/mysql.service';
-import { Store } from '@ngrx/store';
-import * as fromApp from './app.reducer';
-import { GeradorFiltro } from '../mysql/geradorFiltro';
+import { RespostaMySql } from '../mysql/resposta';
+import { Palavra } from 'src/app/models/Palavra';
 
 @Injectable()
 export class PalavrasEffect{
-    fetchPalavras$ = createEffect(() => this.actions$.pipe(
-        ofType(ActionPalavra.FETCH_PALAVRA),
-        switchMap((action: ActionPalavra.FetchPalavra) => {
-            return this.mysql.readOperationFiltered('palavras',[GeradorFiltro.stringContem('lema', 'ar')])
-        }),
-        map((palavras) =>{
-            return {type: ActionPalavra.SET_PALAVRA,
-            payload: palavras}
-        }),
-        catchError(()=>EMPTY)
+    fetchPalavras$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(ActionPalavra.FETCH_PALAVRA),
+            exhaustMap(action => 
+                this.mysql.readOperationFiltered('palavras', action.filters).pipe(
+                    map((data : RespostaMySql<Palavra>) =>
+                        ActionPalavra.SET_PALAVRA({payload: data.records})
+                    ),
+                    catchError(error => of(
+                        ActionPalavra.FETCH_PALAVRA_FAIL({
+                            payload: error
+                        })
+                    ))
+                )
+            )
         )
     );
    
@@ -34,5 +38,5 @@ export class PalavrasEffect{
         )
     );*/
 
-    constructor(private actions$: Actions, private mysql : MySqlConnectorService,private store: Store<fromApp.AppState>){}
+    constructor(private actions$: Actions, private mysql : MySqlConnectorService){}
 }

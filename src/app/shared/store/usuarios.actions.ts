@@ -1,41 +1,29 @@
-import {Action} from '@ngrx/store';
+import {createAction, props} from '@ngrx/store';
 import {Usuario} from '../../models/Usuario';
+import {RespostaErroMySql} from '../mysql/resposta';
 
-export const ADD_USUARIO = 'ADD_USUARIO'
-export const SET_USUARIO = 'SET_USUARIO';
-export const UPDATE_USUARIO = 'UPDATE_USUARIO';
-export const DELETE_USUARIO = 'DELETE_USUARIO';
-export const FETCH_USUARIO = 'FETCH_USUARIO';
-export const STORE_USUARIO = 'STORE_USUARIO';
-
-export class AddUsuario implements Action{
-    readonly type = ADD_USUARIO;
-    constructor(public payload:Usuario){}
-}
-
-export class SetUsuario implements Action{
-    readonly type = SET_USUARIO;
-    constructor(public payload:Usuario[]){}
-}
-
-export class UpdateUsuario implements Action{
-    readonly type = UPDATE_USUARIO;
-    constructor(public payload:{old: Usuario, new: Usuario}){}
-}
-
-export class DeleteUsuario implements Action{
-    readonly type = DELETE_USUARIO;
-    constructor(public payload:Usuario){}
-}
-
-export class FetchUsuario implements Action{
-    readonly type = FETCH_USUARIO;
-    constructor(public payload:Usuario){}
-}
-
-export class StoreUsuario implements Action{
-    readonly type = STORE_USUARIO;
-    constructor(public payload:Usuario){}
-}
-
-export type UsuarioActions = AddUsuario | SetUsuario | UpdateUsuario | DeleteUsuario | FetchUsuario | StoreUsuario;
+export const ADD_USUARIO = createAction(
+    'ADD_USUARIO',
+    props<{payload: Usuario}>()
+);
+export const SET_USUARIO = createAction(
+    'SET_USUARIO',
+    props<{payload: Usuario[]}>()
+);
+export const UPDATE_USUARIO = createAction(
+    'UPDATE_USUARIO',
+    props<{payload: Usuario, updateOn: Usuario}>()
+);
+export const DELETE_USUARIO = createAction(
+    'DELETE_USUARIO',
+    props<{payload: Usuario}>()
+);
+export const FETCH_USUARIO = createAction(
+    'FETCH_USUARIO',
+    props<{filters: string[]}>()
+);
+export const STORE_USUARIO = createAction('STORE_USUARIO');
+export const FETCH_USUARIO_FAIL = createAction(
+    'FETCH_USUARIO_FAIL',
+    props<{payload: RespostaErroMySql<Usuario>}>()
+);

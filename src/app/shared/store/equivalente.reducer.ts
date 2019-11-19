@@ -1,35 +1,43 @@
 import * as EquivalenteActions from './equivalente.actions';
 import { Equivalente } from 'src/app/models/Equivalente';
-import * as fromApp from './app.reducer';
-
-export interface FeatureState extends fromApp.AppState{
-    equivalente: State
-}
+import { createReducer, on } from '@ngrx/store';
 
 export interface State{
     equivalente: Equivalente[];
 }
 
-export const initialState = [];
+export const initialState : State= {
+    equivalente: []
+};
 
-export function palavraReducer(state = initialState, action:EquivalenteActions.EquivalenteActions){
-    switch (action.type){
-        case (EquivalenteActions.ADD_EQUIVALENTE):
+const _equivalenteReducer = createReducer(initialState,
+    on(EquivalenteActions.ADD_EQUIVALENTE, 
+        (state, {payload}) => (
+             {...state, equivalente: [...state.equivalente, payload]}
+        )
+    ),
+    on(EquivalenteActions.SET_EQUIVALENTE, 
+        (state, {payload}) => (
+            {...state, equivalente: payload}
+        )
+    ),
+    on(EquivalenteActions.DELETE_EQUIVALENTE, 
+        (state,{payload}) => {
+            let d  = state.equivalente;
+            const di = d.findIndex(r => payload === r);
+            d.splice(di,1);
+            return {...state, equivalente: d}
+        }
+    ),
+    on(EquivalenteActions.UPDATE_EQUIVALENTE, (state, {payload, updateOn}) => {
+        let u = state.equivalente;
+        const du = u.findIndex(r => updateOn == r);
+        u.splice(du,1);
+        u.push(payload);
+        return {...state, equivalente: u}
+    }),
+);
 
-            return [...state, action.payload]
-        case (EquivalenteActions.SET_EQUIVALENTE): 
-            return [...state, action.payload];
-        case (EquivalenteActions.UPDATE_EQUIVALENTE):
-            const idx = initialState.indexOf(action.payload.old);
-            let equivalente = initialState;
-            equivalente[idx] = action.payload.new;
-            return [...state, equivalente];
-        case (EquivalenteActions.DELETE_EQUIVALENTE):
-            const ix = initialState.indexOf(action.payload);
-            let equivalenteD = initialState;
-            equivalenteD.splice(ix,1);
-            return [...state,equivalenteD];
-        default:
-            return state;
-    }
+export function equivalenteReducer(state, action) {
+    return _equivalenteReducer(state,action);
 }
