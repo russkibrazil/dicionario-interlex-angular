@@ -1,6 +1,5 @@
 import * as UsuariosActions from './usuarios.actions';
 import { Usuario } from 'src/app/models/Usuario';
-import * as fromApp from './app.reducer';
 import { createReducer, on } from '@ngrx/store';
 
 export interface State{
