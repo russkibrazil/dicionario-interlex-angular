@@ -36,14 +36,16 @@
                     <label for="notasCulturais">Notas Culturais</label>
                     <textarea id="notasCulturais" class="form-control" name="notasCulturais" rows="3"></textarea>
                 </div>
-                <div *ngIf="palavraAtiva.idioma === 'ES'">
-                    <div class="form-group">
-                        <label for="sinonimo1">Sinonimo 1</label>
-                        <input id="sinonimo1" class="form-control" type="text" name="sinonimo1">
-                    </div>
-                    <div class="form-group">
-                        <label for="sinonimo2">Sinônimo 2</label>
-                        <input id="sinonimo2" class="form-control" type="text" name="sinonimo2">
+                <div *ngIf="palavraAtiva">
+                    <div *ngIf="palavraAtiva.idioma === 'ES'">
+                        <div class="form-group">
+                            <label for="sinonimo1">Sinonimo 1</label>
+                            <input id="sinonimo1" class="form-control" type="text" name="sinonimo1">
+                        </div>
+                        <div class="form-group">
+                            <label for="sinonimo2">Sinônimo 2</label>
+                            <input id="sinonimo2" class="form-control" type="text" name="sinonimo2">
+                        </div>
                     </div>
                 </div>
             </form>

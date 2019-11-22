@@ -10,10 +10,13 @@
     https://www.hiago.me/2018/09/08/ionic-angular-fazendo-o-cors-seu-amigo/
     https://www.techiediaries.com/angular-httpclient/
 */
+
+/* MYSQL gone away
+    https://dev.mysql.com/doc/refman/8.0/en/gone-away.html
+*/
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class MySqlConnectorService {
@@ -39,8 +42,12 @@ export class MySqlConnectorService {
 
     readOperationFiltered(tabela:string, filtro:string[]):Observable<any>{
         let site : string = (this.baseUrl + '/' + tabela + '?');
-        site.concat(...filtro);
-        return this.httpClient.get(site);
+        site = site.concat(...filtro);
+        return this.httpClient.get(site, {
+            observe: 'body',
+            responseType: 'json',
+            withCredentials: false
+        });
     }
 
     createOperation(tabela:string, dados:string) : Observable<any> {
