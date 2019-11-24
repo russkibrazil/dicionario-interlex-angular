@@ -1,19 +1,36 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm">
-            <form method="" action="" [formGroup]="usuarioForm" (ng-submit)="onSubmit()">
+            <form method="" action="" [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label for="usuario">Nome de usuário</label>
-                    <input id="usuario" class="form-control" type="text" name="usuario">
+                    <input 
+                        id="usuario" 
+                        class="form-control" 
+                        type="text" 
+                        name="usuario"
+                        formControlName="usuario"
+                    >
                 </div>
                 <div>
                     <div class="form-group">
                         <label for="senha">Digite uma senha</label>
-                        <input id="senha" class="form-control" type="text" name="senha">
+                        <input 
+                            id="senha" 
+                            class="form-control" 
+                            type="text"
+                            name="senha"
+                            formControlName="senha"
+                        >
                     </div>
                     <div class="form-group">
                         <label for="confirma-senha">Confirme a senha</label>
-                        <input id="confirma-senha" class="form-control" type="text" name="confirma-senha">
+                        <input 
+                            id="confirma-senha" 
+                            class="form-control" 
+                            type="text" 
+                            name="confirma-senha"
+                        >
                     </div>
                 </div>
                 <div class="form-group">
@@ -25,19 +42,43 @@
                 <hr>
                 <div class="form-group">
                     <label for="nome">Nome</label>
-                    <input id="nome" class="form-control" type="text" name="nome">
+                    <input 
+                        id="nome" 
+                        class="form-control"
+                        type="text"
+                        name="nome"
+                        formControlName="nome"
+                    >
                 </div>
                 <div class="form-group">
                     <label for="email">E-mail</label>
-                    <input id="email" class="form-control" type="email" name="email">
+                    <input 
+                        id="email" 
+                        class="form-control" 
+                        type="email" 
+                        name="email"
+                        formControlName="email"
+                    >
                 </div>
                 <div class="form-group">
                     <label for="cpf">CPF</label>
-                    <input id="cpf" class="form-control" type="text" name="cpf">
+                    <input 
+                        id="cpf" 
+                        class="form-control" 
+                        type="text" 
+                        name="cpf"
+                        formControlName="cpf"
+                    >
                 </div>
                 <div class="form-group">
                     <label for="telefone">Telefone</label>
-                    <input id="telefone" class="form-control" type="text" name="telefone">
+                    <input 
+                        id="telefone" 
+                        class="form-control" 
+                        type="text" 
+                        name="telefone"
+                        formControlName="telefone"
+                    >
                 </div>
             </form>
         </div>

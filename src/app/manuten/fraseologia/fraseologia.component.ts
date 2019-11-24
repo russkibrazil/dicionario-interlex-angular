@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Fraseologia } from 'src/app/models/Fraseologia';
+import { FraseologiaService } from 'src/app/services/fraseologia.service';
+import { PalavraService } from 'src/app/services/palavra.service';
+import { Palavra } from 'src/app/models/Palavra';
 
 @Component({
   selector: 'app-fraseologia',
@@ -7,18 +11,26 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./fraseologia.component.css']
 })
 export class FraseologiaComponent implements OnInit {
-  fraseForm : FormGroup;
+  private fraseForm : FormGroup;
+  private bancoFrases:Fraseologia[];
+  private fraseAtiva:Fraseologia;
+  private tipos = ['Uso comum', 'Expressão idiomática'];
+  private pos :number;
+  private estadoNovo = true;
+  private pA : Palavra;
 
-  constructor() { }
+  constructor(private fSvc : FraseologiaService, private pSvc : PalavraService) { }
 
   ngOnInit() {
+    this.pA = this.pSvc.getPalavraAtiva();
     this.fraseForm = new FormGroup({
-      'fraseOriginal' : new FormControl('null', [Validators.required]),
-      'fraseEquvalente' :  new FormControl('null', [Validators.required]),
-      'exemploForiginal' : new FormControl('null', Validators.required),
-      'exemploFequivalente' : new FormControl('null', Validators.required),
-      'notasGramaticais' : new FormControl('null'),
-      'notasCulturais' : new FormControl('null')
+      'fraseOriginal' : new FormControl('', [Validators.required]),
+      'fraseEquvalente' :  new FormControl('', [Validators.required]),
+      'exemploForiginal' : new FormControl('', Validators.required),
+      'exemploFequivalente' : new FormControl('', Validators.required),
+      'notasGramaticais' : new FormControl(''),
+      'notasCulturais' : new FormControl(''),
+      'tipos' : new FormControl('')
     });
   }
 
@@ -31,34 +43,52 @@ export class FraseologiaComponent implements OnInit {
     switch (ev){
       case 'novo':
         if (this.fraseForm.dirty){
-          this.fraseForm.value['frase'] = '';
-          this.fraseForm.value['telefone'] = '';
-          this.fraseForm.value['email'] = '';
-          this.fraseForm.value['nome'] = '';
-          this.fraseForm.value['cpf'] = '';
-          this.fraseForm.value['permissao'] = 'EDT';
-          this.fraseForm.value['entrasenha'] = '';
+          this.fraseForm.reset();
+          this.estadoNovo = true;
         }
       break;
       case 'salvar':
-        if (this.fraseForm.touched){
-          console.log('salvar');
+        if (this.fraseForm.touched && this.fraseForm.valid){
+          let novo  = new Fraseologia(1,
+            this.fraseForm.value['fraseOriginal'],
+            this.fraseForm.value['fraseEquivalente'],
+            this.fraseForm.value['exemploFOriginal'],
+            this.fraseForm.value['exemploFEquivalente'],
+            this.fraseForm.value['notasGramaticais'],
+            this.fraseForm.value['notasCulturais'],
+            'c'
+          );
+          if (this.estadoNovo){
+            this.fSvc.add(novo);
+            this.estadoNovo = false;
+          }
+          else
+            this.fSvc.update(novo, this.fraseAtiva);
+          window.alert('Salvo!');
+          this.sideButtonClicked({tipo:'primeiro'});
         }
       break;
       case 'apagar':
-        console.log('apagar');
+        this.fSvc.delete(this.fraseAtiva);
+        window.alert('Apagado!');
       break;
       case 'primeiro':
-        console.log('primeiro');
+        this.pos = 0;
+        this.fraseAtiva = this.bancoFrases[this.pos];
       break;
       case 'anterior':
-        console.log('anterior');
+        if (this.pos > 0)
+          this.pos--;
+        this.fraseAtiva = this.bancoFrases[this.pos];
       break;
       case 'proximo':
-        console.log('proximo');
+        if (this.pos < this.bancoFrases.length)
+          this.pos--;
+        this.fraseAtiva = this.bancoFrases[this.pos];
       break;
       case 'ultimo':
-        console.log('ultimo');
+        this.pos = this.bancoFrases.length - 1;
+        this.fraseAtiva = this.bancoFrases[this.pos];
       break;
       default:
         break;

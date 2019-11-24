@@ -10,23 +10,32 @@
                 </div>
                 <div class="form-group">
                     <label for="fraseEquivalente">Frase Equivalente</label>
-                    <input id="fraseEquivalente" class="form-control" type="text" name="fraseEquivalente">
+                    <input id="fraseEquivalente" class="form-control" type="text" name="fraseEquivalente"
+                    formControlName="fraseEquivalente">
                 </div>
                 <div class="form-group">
                     <label for="exemploForiginal">Exemplo da frase Original</label>
-                    <input id="exemploForiginal" class="form-control" type="text" name="exemploForiginal">
+                    <input id="exemploForiginal" class="form-control" type="text" name="exemploForiginal"
+                    formControlName="exemploForiginal">
                 </div>
                 <div class="form-group">
                     <label for="exemploFequivalente">Exemplo de frase Equivalente</label>
-                    <input id="exemploFequivalente" class="form-control" type="text" name="exemploFequivalente">
+                    <input id="exemploFequivalente" class="form-control" type="text" name="exemploFequivalente"
+                    formControlName="exemploFequivalente">
                 </div>
                 <div class="form-group">
                     <label for="notasGramaticais">Notas gramaticais</label>
-                    <input id="notasGramaticais" class="form-control" type="text" name="notasGramaticais">
+                    <input id="notasGramaticais" class="form-control" type="text" name="notasGramaticais"
+                    formControlName="notasGramaticais">
                 </div>
                 <div class="form-group">
                     <label for="notasCulturais">Notas Culturais</label>
-                    <input id="notasCulturais" class="form-control" type="text" name="notasCulturais">
+                    <input id="notasCulturais" class="form-control" type="text" name="notasCulturais"
+                    formControlName="notasCulturais">
+                </div>
+                <div class="form-group">
+                    <label for="tipo">Tipo</label>
+                    <option *ngFor="let i of tipos" [ngValue]="i">{{i}}</option>
                 </div>
                 
                 <button class="btn btn-primary" type="submit">Salvar</button>

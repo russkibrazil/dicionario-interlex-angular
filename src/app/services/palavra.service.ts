@@ -6,6 +6,7 @@ import { MySqlConnectorService } from '../shared/mysql/mysql.service';
 @Injectable({providedIn: 'root'})
 export class PalavraService implements MethodsServicesDicionario<Palavra>{
     private palavras : Palavra[] = [];
+    private palavraAtiva : Palavra;
 
     constructor(private mysql : MySqlConnectorService){}
 
@@ -49,6 +50,11 @@ export class PalavraService implements MethodsServicesDicionario<Palavra>{
     store() : boolean {
         throw new Error("Method not implemented.");
     }
-
+    setPalavraAtiva(item: Palavra){
+        this.palavraAtiva = item;
+    }
+    getPalavraAtiva():Palavra{
+        return this.palavraAtiva;
+    }
 
 }

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { PalavraService } from 'src/app/services/palavra.service';
+import { EquivalenteService } from 'src/app/services/equivalente.service';
+import { Palavra } from 'src/app/models/Palavra';
+import { Equivalente } from 'src/app/models/Equivalente';
 
 @Component({
   selector: 'app-equivalente',
@@ -9,13 +13,18 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class EquivalenteComponent implements OnInit {
 
   equivalenteForm : FormGroup;
+  private pA : Palavra;
+  private equivalenteAtivo : Equivalente;
+  private bancoEquivalentes : Equivalente[];
+  private estadoNovo = true;
+  private pos : number;
 
-  constructor() { }
+  constructor(private pSvc : PalavraService, private eSvc : EquivalenteService) { }
 
   ngOnInit() {
     this.equivalenteForm = new FormGroup({
-      'lemaEquivalente' : new FormControl('null', Validators.required),
-      'numOrdemApresentacao' : new FormControl('null', [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
+      'lemaEquivalente' : new FormControl('', Validators.required),
+      'numOrdemApresentacao' : new FormControl('', [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
       'heteros' : new FormGroup({
         'heterogenerico' : new FormControl(),
         'heterotonico' : new FormControl(),
@@ -37,34 +46,51 @@ export class EquivalenteComponent implements OnInit {
     switch (ev){
       case 'novo':
         if (this.equivalenteForm.dirty){
-          this.equivalenteForm.value['equivalente'] = '';
-          this.equivalenteForm.value['telefone'] = '';
-          this.equivalenteForm.value['email'] = '';
-          this.equivalenteForm.value['nome'] = '';
-          this.equivalenteForm.value['cpf'] = '';
-          this.equivalenteForm.value['permissao'] = 'EDT';
-          this.equivalenteForm.value['entrasenha'] = '';
+          this.equivalenteForm.reset();
+          this.estadoNovo = true;
         }
       break;
       case 'salvar':
-        if (this.equivalenteForm.touched){
-          console.log('salvar');
+        if (this.equivalenteForm.touched && this.equivalenteForm.valid){
+          let novo = new Equivalente(
+            this.pA.Id,
+            this.equivalenteForm.value['lemaEquivalente'],
+            this.equivalenteForm.value['exemploOriginal'],
+            this.equivalenteForm.value['exemploEquivalente'],
+            this.equivalenteForm.value['referencia'],
+            this.equivalenteForm.value['palavraGuia'],
+            this.equivalenteForm.value['nOrdemApresentacao']
+          );
+          if (this.estadoNovo)
+            this.eSvc.add(novo);
+          else
+            this.eSvc.update(novo, this.equivalenteAtivo);
+          window.alert('Salvo!');
+          this.estadoNovo = false;
+          this.sideButtonClicked({tipo:'primeiro'});
         }
       break;
       case 'apagar':
-        console.log('apagar');
+        this.eSvc.delete(this.equivalenteAtivo);
+        window.alert('Apagado!');
       break;
       case 'primeiro':
-        console.log('primeiro');
+        this.pos = 0;
+        this.equivalenteAtivo = this.bancoEquivalentes[this.pos];
       break;
       case 'anterior':
-        console.log('anterior');
+        if (this.pos > 0)
+          this.pos--;
+        this.equivalenteAtivo = this.bancoEquivalentes[this.pos];
       break;
       case 'proximo':
-        console.log('proximo');
+        if (this.pos < this.bancoEquivalentes.length)
+          this.pos--;
+        this.equivalenteAtivo = this.bancoEquivalentes[this.pos];
       break;
       case 'ultimo':
-        console.log('ultimo');
+        this.pos = this.bancoEquivalentes.length - 1;
+        this.equivalenteAtivo = this.bancoEquivalentes[this.pos];
       break;
       default:
         break;

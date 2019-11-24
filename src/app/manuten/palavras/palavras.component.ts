@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Palavra } from 'src/app/models/Palavra';
 import {  Router, ActivatedRoute } from '@angular/router';
-
+import { PalavraService } from 'src/app/services/palavra.service';
 
 @Component({
   selector: 'app-palavras',
@@ -11,30 +11,34 @@ import {  Router, ActivatedRoute } from '@angular/router';
 })
 export class PalavrasComponent implements OnInit {
   
-  palavraForm : FormGroup;
-  generos = ['Masculino', 'Feminino', 'Neutro', 'Sem gênero', 'Masc/Fem'];
-  classesGramaticais = ["Artigo",
-  "Substantivo",
-  "Adjetivo",
-  "Advérbio",
-  "Preposição",
-  "Conjunção",
-  "Interjeição",
-  "Pronome",
-  "Verbo",
-  "Numeral",
-  "Substantivo-Adjetivo"];
-  idiomas = ['Português', 'Espanhol', 'Inglês'];
-  palavraAtiva : Palavra;
+  private palavraForm : FormGroup;
+  private generos = ['Masculino', 'Feminino', 'Neutro', 'Sem gênero', 'Masc/Fem'];
+  private classesGramaticais = ["Artigo",
+    "Substantivo",
+    "Adjetivo",
+    "Advérbio",
+    "Preposição",
+    "Conjunção",
+    "Interjeição",
+    "Pronome",
+    "Verbo",
+    "Numeral",
+    "Substantivo-Adjetivo"
+  ];
+  private idiomas = ['Português', 'Espanhol', 'Inglês'];
+  private palavraAtiva : Palavra;
+  private bancoPalavras : Palavra[];
+  private estadoNovo = true;
+  private pos : number;
   
-  constructor(private router:Router, private route:ActivatedRoute) { }
+  constructor(private router:Router, private route:ActivatedRoute, private pSvc : PalavraService) { }
 
   ngOnInit() {
     this.palavraForm = new FormGroup({
-      'lema' : new FormControl('null', Validators.required),
+      'lema' : new FormControl('', Validators.required),
       'sublema' : new FormControl(),
-      'idioma' : new FormControl('null', Validators.required),
-      'classeGramatical' : new FormControl('null', Validators.required),
+      'idioma' : new FormControl('', Validators.required),
+      'classeGramatical' : new FormControl('', Validators.required),
       'genero' : new FormControl('null', Validators.required),
       'definicao' : new FormControl(),
       'notasGramaticais' : new FormControl(),
@@ -51,51 +55,72 @@ export class PalavrasComponent implements OnInit {
   //https://www.concretepage.com/angular/angular-select-option-reactive-form
   onSubmit(){
 
-  }
+  }        
 
   onClickEquivalentes(){
+    this.pSvc.setPalavraAtiva(this.palavraAtiva);
     this.router.navigate(['equivalencias'],{relativeTo: this.route});
   }
   onClickFraseologia(){
+    this.pSvc.setPalavraAtiva(this.palavraAtiva);
     this.router.navigate(['frase'],{relativeTo: this.route});
   }
   onClickConjugacoes(){
+    this.pSvc.setPalavraAtiva(this.palavraAtiva);
     this.router.navigate(['conjugacoes'],{relativeTo: this.route});
   }
   
   sideButtonClicked(evento:{tipo:string}){
-    const ev = evento.tipo;
-    switch (ev){
+    const e = evento.tipo;
+    switch (e){
       case 'novo':
         if (this.palavraForm.dirty){
-          this.palavraForm.value['palavra'] = '';
-          this.palavraForm.value['telefone'] = '';
-          this.palavraForm.value['email'] = '';
-          this.palavraForm.value['nome'] = '';
-          this.palavraForm.value['cpf'] = '';
-          this.palavraForm.value['permissao'] = 'EDT';
-          this.palavraForm.value['entrasenha'] = '';
+          this.palavraForm.reset();
+          this.estadoNovo = true;
         }
       break;
       case 'salvar':
-        if (this.palavraForm.touched){
-          console.log('salvar');
+        if (this.palavraForm.touched && this.palavraForm.valid){
+          let novo = new Palavra(
+            this.palavraAtiva.Id,
+            this.palavraForm.value['lema'],
+            this.palavraForm.value['classeGramatical'],
+            this.palavraForm.value['idioma'],
+            this.palavraForm.value['notasGramaticais'],
+            this.palavraForm.value['notasCulturais'],
+            this.palavraForm.value['genero'],
+            this.palavraForm.value['definicao']
+          );
+          if (this.estadoNovo)
+            this.pSvc.add(novo);
+          else
+            this.pSvc.update(novo, this.palavraAtiva);
+          window.alert('Salvo!');
+          this.estadoNovo = false;
+          this.sideButtonClicked({tipo:'primeiro'});
         }
       break;
       case 'apagar':
-        console.log('apagar');
+        this.pSvc.delete(this.palavraAtiva);
+        window.alert('Apagado!');
       break;
       case 'primeiro':
-        console.log('primeiro');
+        this.pos = 0;
+        this.palavraAtiva = this.bancoPalavras[this.pos];
       break;
       case 'anterior':
-        console.log('anterior');
+        if (this.pos > 0)
+          this.pos--;
+        this.palavraAtiva = this.bancoPalavras[this.pos];
       break;
       case 'proximo':
-        console.log('proximo');
+        if (this.pos < this.bancoPalavras.length)
+          this.pos--;
+        this.palavraAtiva = this.bancoPalavras[this.pos];
       break;
       case 'ultimo':
-        console.log('ultimo');
+        this.pos = this.bancoPalavras.length - 1;
+        this.palavraAtiva = this.bancoPalavras[this.pos];
       break;
       default:
         break;

@@ -26,6 +26,9 @@
           <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
         </form>
-        <a class="btn btn-link" (click)="onClickEntrar()">Entrar</a>
+        <a class="btn btn-link" (click)="onClickEntrar()" *ngIf="true; else loggedin">Entrar</a>
+        <ng-template #loggedin>
+          <a class="btn btn-link" (click)="onClickLogout()">Sair</a>
+        </ng-template>
       </div>
   </nav>

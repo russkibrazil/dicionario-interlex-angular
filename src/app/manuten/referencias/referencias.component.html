@@ -1,22 +1,46 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm">
-            <form action="" [formGroup]="referenciasForm" (ng-submit)="onSubmit()">
+            <form action="" [formGroup]="referenciasForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label for="codigo">Código da Referência</label>
-                    <input id="codigo" class="form-control" type="text" name="codigo">
+                    <input 
+                        id="codigo" 
+                        class="form-control" 
+                        type="text" 
+                        name="codigo"
+                        formControlName="codigo"
+                    >
                 </div>
                 <div class="form-group">
                     <label for="autor">Autor</label>
-                    <input id="autor" class="form-control" type="text" name="autor">
+                    <input 
+                        id="autor" 
+                        class="form-control" 
+                        type="text" 
+                        name="autor"
+                        formControlName="autor"
+                    >
                 </div>
                 <div class="form-group">
                     <label for="descricao">Obra referenciada</label>
-                    <input id="descricao" class="form-control" type="text" name="descricao">
+                    <input 
+                        id="descricao" 
+                        class="form-control" 
+                        type="text" 
+                        name="descricao"
+                        formControlName="descricao"
+                    >
                 </div>
                 <div class="form-group">
                     <label for="ano">Ano de publicação</label>
-                    <input id="ano" class="form-control" type="number" name="ano">
+                    <input 
+                        id="ano" 
+                        class="form-control" 
+                        type="number" 
+                        name="ano"
+                        formControlName="ano"
+                    >
                 </div>
             </form>
         </div>

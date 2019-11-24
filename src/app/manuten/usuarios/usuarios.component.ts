@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UsuarioService } from 'src/app/services/usuarios.service';
+import { Usuario } from 'src/app/models/Usuario';
 
 @Component({
   selector: 'app-usuarios',
@@ -8,21 +10,23 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class UsuariosComponent implements OnInit {
 
-  usuarioForm : FormGroup;
-  permissoes = ['Administrador', 'Editor', 'Usuário'];
+  private usuarioForm : FormGroup;
+  private permissoes = ['Administrador', 'Editor', 'Usuário'];
+  private usuario : Usuario;
+  private estadoNovo = true;
 
-  constructor() { }
+  constructor(private uSvc : UsuarioService) { }
 
   ngOnInit() {
     this.usuarioForm = new FormGroup({
-      'usuario' : new FormControl('null', Validators.required),
-      'telefone' : new FormControl('', Validators.pattern(/^[1-9][0-9][2-9][0-9]{7,8}$/)),
-      'email' : new FormControl('null', Validators.email),
-      'nome' : new FormControl('null', Validators.required),
-      'cpf' : new FormControl('null', [Validators.required, Validators.pattern(/^[0-9]{11}$/)]),
+      'usuario' : new FormControl('', Validators.required),
+      'telefone' : new FormControl('', Validators.pattern(/^[1-9]{2}[2-9][0-9]{7,8}$/)),
+      'email' : new FormControl('', Validators.email),
+      'nome' : new FormControl('', Validators.required),
+      'cpf' : new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{11}$/)]),
       'permissao' : new FormControl('EDT', Validators.required),
       'senha' : new FormGroup({
-        'entrasenha' : new FormControl('null', Validators.required)
+        'entrasenha' : new FormControl('', Validators.required)
       })
     });
   }
@@ -34,35 +38,51 @@ export class UsuariosComponent implements OnInit {
     switch (ev){
       case 'novo':
         if (this.usuarioForm.dirty){
-          this.usuarioForm.value['usuario'] = '';
-          this.usuarioForm.value['telefone'] = '';
-          this.usuarioForm.value['email'] = '';
-          this.usuarioForm.value['nome'] = '';
-          this.usuarioForm.value['cpf'] = '';
-          this.usuarioForm.value['permissao'] = 'EDT';
-          this.usuarioForm.value['entrasenha'] = '';
+          this.usuarioForm.reset();
+          this.estadoNovo = true;
         }
       break;
       case 'salvar':
-        if (this.usuarioForm.touched){
-          console.log('salvar');
+        if (this.usuarioForm.touched && this.usuarioForm.valid){
+          let novo = new Usuario();
+          novo.usr = this.usuarioForm.value['usuario'];
+          novo.telefone = this.usuarioForm.value['telefone'];
+          novo.email = this.usuarioForm.value['email'];
+          novo.nome = this.usuarioForm.value['nome'];
+          novo.cpf = this.usuarioForm.value['cpf'];
+          novo.nivel_permissao = this.usuarioForm.value['permissao'];
+          novo.pass = this.usuarioForm.value['entrasenha'];
+          if (this.estadoNovo)
+            this.uSvc.add(novo);
+          else
+            this.uSvc.update(novo, this.usuario);
+          window.alert('Salvo!');
+          this.estadoNovo = false;
+          this.sideButtonClicked({tipo:'primeiro'});
         }
       break;
       case 'apagar':
-        console.log('apagar');
+        this.uSvc.delete(this.usuario);
+        window.alert('Apagado!');
       break;
-      case 'primeiro':
-        console.log('primeiro');
+      /*case 'primeiro':
+        this.pos = 0;
+        this.palavraAtiva = this.bancoPalavras[this.pos];
       break;
       case 'anterior':
-        console.log('anterior');
+        if (this.pos > 0)
+          this.pos--;
+        this.palavraAtiva = this.bancoPalavras[this.pos];
       break;
       case 'proximo':
-        console.log('proximo');
+        if (this.pos < this.bancoPalavras.length)
+          this.pos--;
+        this.palavraAtiva = this.bancoPalavras[this.pos];
       break;
       case 'ultimo':
-        console.log('ultimo');
-      break;
+        this.pos = this.bancoPalavras.length - 1;
+        this.palavraAtiva = this.bancoPalavras[this.pos];
+      break;*/
       default:
         break;
     }

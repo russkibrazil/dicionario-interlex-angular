@@ -1,10 +1,14 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm">
-            <form action="" [formGroup]="palavraForm" (ng-submit)="onSubmit()">
+            <input type="text">
+            <button class="btn btn-success" (click)="onBuscar()">Buscar</button>
+        </div>
+        <div class="col-sm">
+            <form action="" [formGroup]="palavraForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label for="lema">Lema</label>
-                    <input id="lema" class="form-control" type="text" name="lema">
+                    <input id="lema" class="form-control" type="text" name="lema" formControlName="lema">
                 </div>
                 <div class="form-group">
                     <label for="idioma">Idioma</label>
@@ -26,25 +30,25 @@
                 </div>
                 <div class="form-group">
                     <label for="definicao">Definição</label>
-                    <textarea id="definicao" class="form-control"  name="definicao" rows="3"></textarea>
+                    <textarea id="definicao" class="form-control"  name="definicao" rows="3" formControlName="definicao"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="notasGramaticais">Notas gramaticais</label>
-                    <textarea id="notasGramaticais" class="form-control" name="notasGramaticais" rows="3"></textarea>
+                    <textarea id="notasGramaticais" class="form-control" name="notasGramaticais" rows="3" formControlName="notasGramaticais"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="notasCulturais">Notas Culturais</label>
-                    <textarea id="notasCulturais" class="form-control" name="notasCulturais" rows="3"></textarea>
+                    <textarea id="notasCulturais" class="form-control" name="notasCulturais" rows="3" formControlName="notasCulturais"></textarea>
                 </div>
                 <div *ngIf="palavraAtiva">
                     <div *ngIf="palavraAtiva.idioma === 'ES'">
                         <div class="form-group">
                             <label for="sinonimo1">Sinonimo 1</label>
-                            <input id="sinonimo1" class="form-control" type="text" name="sinonimo1">
+                            <input id="sinonimo1" class="form-control" type="text" name="sinonimo1" formControlName="sinonimo1">
                         </div>
                         <div class="form-group">
                             <label for="sinonimo2">Sinônimo 2</label>
-                            <input id="sinonimo2" class="form-control" type="text" name="sinonimo2">
+                            <input id="sinonimo2" class="form-control" type="text" name="sinonimo2" formControlName="sinonimo2">
                         </div>
                     </div>
                 </div>
