@@ -14,14 +14,19 @@ export class AuthFormComponent implements OnInit {
 
   ngOnInit() {
     this.aForm = new FormGroup({
-      'usuario' : new FormControl('null', Validators.required),
-      'senha' : new FormControl('null', Validators.required)
+      'usuario' : new FormControl('', Validators.required),
+      'senha' : new FormControl('', Validators.required)
     });
   }
 
   onSubmit(){
-    this.authSvc.login();
-    this.router.navigate(['m/edit']);
+    const u = this.aForm.value['usuario'];
+    const p = this.aForm.value['senha'];
+    if (this.authSvc.tryLogin(u, p))
+      ///FIXME: Não navega
+      this.router.navigate(['m/edit']);
+    else
+      console.log('non valid config');
   }
   
 }
