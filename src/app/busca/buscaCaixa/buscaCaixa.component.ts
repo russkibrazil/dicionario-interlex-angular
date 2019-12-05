@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import {NgForm} from '@angular/forms';
-import { MySqlConnectorService } from 'src/app/shared/mysql/mysql.service';
-import { Palavra } from 'src/app/models/Palavra';
+import { GeradorFiltro } from 'src/app/shared/mysql/geradorFiltro';
+import { PalavraService } from 'src/app/services/palavra.service';
 
 @Component({
   selector: 'app-busca-caixa',
@@ -12,20 +11,11 @@ import { Palavra } from 'src/app/models/Palavra';
 export class BuscaCaixaComponent implements OnInit {
   @ViewChild('frmBusca', {static: true}) formBusca: NgForm;
   
-  
-  constructor(private rt: ActivatedRoute, private rts: Router, private mysqlMgr :  MySqlConnectorService){}
+  constructor(private pSvc : PalavraService){}
 
   onBuscar(){
     const chavePesquisa = this.formBusca.value.txtbusca;
-    /*let pesquisa = new MysqlBasePackage('palavra', 'SELECT * FROM palavra WHERE lema LIKE \'' + chavePesquisa + '\'');
-    this.mysqlMgr.readOperation(pesquisa)
-      .subscribe(
-        (ret : Palavra[])=>{
-          this.resultados = ret;
-        }
-      )
-    ;*/
-
+    this.pSvc.fetch(['filter=' + GeradorFiltro.stringContem('Lema',chavePesquisa)]);
   }
   
   ngOnInit() {

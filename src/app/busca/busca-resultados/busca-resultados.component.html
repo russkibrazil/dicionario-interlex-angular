@@ -1,31 +1,31 @@
-<div class="col-sm-12">
+<div class="col-sm-12" >
     <h3>Resultados possíveis</h3>
     
-    <div *ngIf="idioma == es">
+    <div *ngIf="idioma == 'es'">
         <div 
-            *ngFor="let palavra of resultados" 
-            (click)="onClickElemento('es', palavra.id, palavra.lema)"
+            *ngFor="let palavra of resultados | async" 
+            (click)="onClickElemento(palavra.Idioma, palavra.Id, palavra.Lema)"
             class="col-sm-3"
         >
-            <p>{{palavra.lema}}</p>
+            <p>{{palavra.Lema}}</p>
         </div>
         <div class="col-sm-9">
             <div class="col-sm-12"
-                *ngFor="let palavra of resultados" 
+                *ngFor="let palavra of resultados | async"
                 (click)="onClickElemento()"
             >
-                <h5>{{palavra.lema}}</h5>
+                <h5>{{palavra.Lema}}</h5>
             </div>
         </div>
     </div>
     
-    <div *ngIf="idioma !== es">
+    <div *ngIf="idioma !== 'es'">
         <div 
-            *ngFor="let palavra of resultados" 
-            (click)="onClickElemento('en', palavra.id, palavra.lema)"
+            *ngFor="let palavra of resultados | async" 
+            (click)="onClickElemento(palavra.Idioma, palavra.Id, palavra.Lema)"
             class="col-sm-12"
         >
-            <h5>{{palavra.lema}}</h5>
+            <h5>{{palavra.Lema}}</h5>
             <p>{{palavra.Definicao}}</p>
         </div>
     </div>

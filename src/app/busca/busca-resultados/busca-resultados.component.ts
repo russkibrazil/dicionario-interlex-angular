@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Palavra } from 'src/app/models/Palavra';
 import { Router } from '@angular/router';
+import { PalavraService } from 'src/app/services/palavra.service';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-busca-resultados',
@@ -8,13 +11,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./busca-resultados.component.css']
 })
 export class BuscaResultadosComponent implements OnInit {
-  resultados :  Palavra[] = [new Palavra(1, 'sdasdasd', 'dsdasdas', 'dsadasdasda', 'asfdadfadfad', 'afdasfdasfdsf', 'asdfdafdsfs', 'asdfasfasdf'),
-  new Palavra(2,'Minha palavra', 'classe', 'idioma', 'notag', 'notac', 'genero', 'definicao')];
+  resultados : Observable<Palavra[]>;
   idioma = 'es';
 
-  constructor(private rotas : Router) { }
+  constructor(private rotas : Router, private pSvc : PalavraService) {}
 
   ngOnInit() {
+    this.resultados = this.pSvc.sPalavras.asObservable();
   }
 
   onClickElemento(lng : string, id: number, lema : string){
