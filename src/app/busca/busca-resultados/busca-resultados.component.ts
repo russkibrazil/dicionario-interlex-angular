@@ -3,7 +3,6 @@ import { Palavra } from 'src/app/models/Palavra';
 import { Router } from '@angular/router';
 import { PalavraService } from 'src/app/services/palavra.service';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-busca-resultados',
@@ -18,10 +17,11 @@ export class BuscaResultadosComponent implements OnInit {
 
   ngOnInit() {
     this.resultados = this.pSvc.sPalavras.asObservable();
+    
   }
 
   onClickElemento(lng : string, id: number, lema : string){
-    this.rotas.navigate(['/',lng, id, lema]);
+    this.rotas.navigate(['/',lng.toLowerCase(), id, lema]);
   }
 
 }

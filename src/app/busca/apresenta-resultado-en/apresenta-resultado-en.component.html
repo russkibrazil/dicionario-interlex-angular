@@ -1,16 +1,16 @@
 <div class="row">
     <div class="col-sm-12">
-        <h2>{{palavraBuscada.lema}}</h2>
-        <h5>{{palavraBuscada.cGram}}</h5>
+        <h2>{{pA.Lema}}</h2>
+        <h5>{{pA.ClasseGram}}</h5>
     </div>
 </div>
 
-<div class="row" *ngFor="let eq of palavraBuscada.listaEq; let j = index">
-    <p>{{j}} {{eq.palavraGuia}}</p>
+<div class="row" *ngFor="let eq of resultadosCI | async; let j = index">
+    <p>{{j}} {{eq.PGuia | async}}</p>
     <div class="row">  
         <div class="col-sm-12">
             <div>
-                <h3>{{palavraBuscada.listaConjEq[j].lema}}</h3>
+                <h3>{{eq.Lema | async}}</h3>
                 
                 <table class="table table-light">
                     <thead>
@@ -27,21 +27,31 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{palavraBuscada.listaConjEq[j].constrPresente}}</td>
-                            <td>{{palavraBuscada.listaConjEq[j].constrPassado}}</td>
-                            <td>{{palavraBuscada.listaConjEq[j].constrWill}}</td>
-                            <td>{{palavraBuscada.listaConjEq[j].constrGoingTo}}</td>
-                            <td>{{palavraBuscada.listaConjEq[j].constrPresPer}}</td>
-                            <td>{{palavraBuscada.listaConjEq[j].constrPasPer}}</td>
-                            <td>{{palavraBuscada.listaConjEq[j].constrPresCon}}</td>
-                            <td>{{palavraBuscada.listaConjEq[j].constrPasCon}}</td>
+                            <td>{{eq.ConstrPresente | async}}</td>
+                            <td>{{eq.ConstrPassado | async}}</td>
+                            <td>{{eq.ConstrWill | async}}</td>
+                            <td>{{eq.ConstrGoingTo | async}}</td>
+                            <td>{{eq.ConstrPresPer | async}}</td>
+                            <td>{{eq.ConstrPasPer | async}}</td>
+                            <td>{{eq.ConstrPresCon | async}}</td>
+                            <td>{{eq.ConstrPasCon | async}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{eq.ExPresente | async}}</td>
+                            <td>{{eq.ExPassado | async}}</td>
+                            <td>{{eq.ExWill | async}}</td>
+                            <td>{{eq.ExGoingTo | async}}</td>
+                            <td>{{eq.ExPresPer | async}}</td>
+                            <td>{{eq.ExPasPer | async}}</td>
+                            <td>{{eq.ExPresCon | async}}</td>
+                            <td>{{eq.ExPasCon | async}}</td>
                         </tr>
                     </tbody>
                 </table>
                 
-                <p>{{palavraBuscada.listaConjEq[j].notaCultura}}</p>
+                <p>{{eq.notas_cultura | async}}</p>
                 <br>
-                <p>{{palavraBuscada.listaConjEq[j].notasGramatica}}</p>
+                <p>{{eq.notas_gramatica | async}}</p>
             </div>
         </div>
     </div>
@@ -53,26 +63,26 @@
         <h3>Fraseologia</h3>
     </div>
 </div>
-<div class="row" *ngFor="let f of palavraBuscada.frasesRelacionadas; let i = index">
+<div class="row" *ngFor="let f of resultadosF | async; let i = index">
    <p>Exemplo {{i}}</p>
     <table class="table table-light">
         <tbody>
             <tr>
-                <td><p>{{f.fraseOrig}}</p></td>
-                <td><p>{{f.fraseEquiv}}</p></td>
+                <td><p>{{f.fraseOrig | async}}</p></td>
+                <td><p>{{f.fraseEquiv | async}}</p></td>
             </tr>
             <tr>
-                <td><p>Exemplo: {{f.exemploOriginal}}</p></td>
-                <td><p>Exemplo: {{f.exemploEquivalente}}</p></td>
+                <td><p>Exemplo: {{f.exemploOriginal | async}}</p></td>
+                <td><p>Exemplo: {{f.exemploEquivalente | async}}</p></td>
             </tr>
         </tbody>
     </table>
     <div class="col-md-12">
         <h5>Notas culturais</h5>
-        <p>{{f.notasCultura}}</p>
+        <p>{{f.notasCultura | async}}</p>
         <br>
         <h5>Notas Gramaticais</h5>
-        <p>{{f.notasGramatica}}</p>
+        <p>{{f.notasGramatica | async}}</p>
     </div>
 </div>
 <div class="row">

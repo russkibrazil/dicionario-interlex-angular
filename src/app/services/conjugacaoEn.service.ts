@@ -1,46 +1,49 @@
 import { MethodsServicesDicionario } from './intefaceBase';
-import { Equivalente } from '../models/Equivalente';
+import { ConjugacaoEn } from '../models/ConjugacaoEn';
 import { Injectable } from '@angular/core';
 import { MySqlConnectorService } from '../shared/mysql/mysql.service';
-import { GeradorFiltro } from '../shared/mysql/geradorFiltro';
-import { Subject } from 'rxjs';
-import { MostraPalavraEquivalenciasView } from '../models/MostraPalavraEquivalenciasView';
 import { RespostaMySql, RespostaErroMySql } from '../shared/mysql/resposta';
+import { Subject } from 'rxjs';
+import { MostraEquivalenciasConjugacaoView } from '../models/MostraEquivalenciasConjugacaoView';
+import { GeradorFiltro } from '../shared/mysql/geradorFiltro';
 
 @Injectable({providedIn: 'root'})
-export class EquivalenteService implements MethodsServicesDicionario<Equivalente>{
-    private equivalentes : Equivalente[] = [];
-    public sEquivalentes : Subject<Equivalente[]>
-    public sPEquivalentes = new Subject<MostraPalavraEquivalenciasView[]>();
+export class ConjugacaoEnService implements MethodsServicesDicionario<ConjugacaoEn>{
+    private cEn : ConjugacaoEn[]  = [];
+    public sCEn = new Subject<ConjugacaoEn[]>();
+    public sEqConjugacaoEn = new Subject<MostraEquivalenciasConjugacaoView[]>();
 
     constructor(private mysql : MySqlConnectorService){}
 
-    add(item: Equivalente) {
-        this.equivalentes = this.equivalentes.concat(item);
+    add(item: ConjugacaoEn) {
+        this.cEn = this.cEn.concat(item);
+        this.updateSubject();
     }    
-    set(item: Equivalente[]) {
-        this.equivalentes = item;
+    set(item: ConjugacaoEn[]) {
+        this.cEn = item;
+        this.updateSubject();
     }
-    update(item: Equivalente, updateOn: Equivalente): boolean {
-        const iu = this.equivalentes.findIndex(e => e === updateOn);
+    update(item: ConjugacaoEn, updateOn: ConjugacaoEn): boolean {
+        const iu = this.cEn.findIndex(e => e === updateOn);
         if (iu == -1)
             return false;
-        this.equivalentes.splice(iu,1);
+        this.cEn.splice(iu, 1);
         this.add(item);
         return true;
     }
-    delete(item: Equivalente): boolean {
-        const id = this.equivalentes.findIndex(e => e == item);
+    delete(item: ConjugacaoEn): boolean {
+        const id = this.cEn.findIndex(e => e === item);
         if (id == -1)
             return false;
-        this.equivalentes.splice(id, 1);
+        this.cEn.splice(id, 1);
+        this.updateSubject();
         return true;
     }
     fetch(filtros: string[]): boolean {
-        const subsc = this.mysql.readOperationFiltered('equivalente', filtros);
+        const subsc = this.mysql.readOperationFiltered('conjugacao', filtros);
         let e = false;
         subsc.subscribe(
-            (resp : RespostaMySql<Equivalente>) => {
+            (resp : RespostaMySql<ConjugacaoEn>) => {
                 if (resp.records.length > 0){
                   this.set(resp.records);
                   e = true;
@@ -49,7 +52,7 @@ export class EquivalenteService implements MethodsServicesDicionario<Equivalente
                   console.log('Nenhum registro encontrado');
                 }
             },
-            (err: RespostaErroMySql<Equivalente>) => {
+            (err: RespostaErroMySql<ConjugacaoEn>) => {
                 if (err.error.records.length > 0){
                     this.set(err.error.records);
                     e = true;
@@ -68,22 +71,26 @@ export class EquivalenteService implements MethodsServicesDicionario<Equivalente
         throw new Error("Method not implemented.");
     }
 
-    fetchPEquivalentesView (id : number){
-        const obsvPe = this.mysql.readOperationFiltered('MostraPalavraEquivalenciasView', [GeradorFiltro.filtroAnd() + GeradorFiltro.igual('Id', id)]);
+    get():ConjugacaoEn[]{
+        return this.cEn;
+    }
+
+    fetchEqConjugacaoEnView(id : number){
+        const subsc = this.mysql.readOperationFiltered('MostraEquivalenciasConjugacaoView', [GeradorFiltro.filtroAnd(true) + GeradorFiltro.igual('Id', id)]);
         let e = false;
-        obsvPe.subscribe(
-            (resp : RespostaMySql<MostraPalavraEquivalenciasView>) => {
+        subsc.subscribe(
+            (resp : RespostaMySql<MostraEquivalenciasConjugacaoView>) => {
                 if (resp.records.length > 0){
-                  this.sPEquivalentes.next(resp.records);
+                  this.sEqConjugacaoEn.next(resp.records);
                   e = true;
                 }
                 else{
                   console.log('Nenhum registro encontrado');
                 }
             },
-            (err: RespostaErroMySql<MostraPalavraEquivalenciasView>) => {
+            (err: RespostaErroMySql<MostraEquivalenciasConjugacaoView>) => {
                 if (err.error.records.length > 0){
-                    this.sPEquivalentes.next(err.error.records);
+                    this.sEqConjugacaoEn.next(err.error.records);
                     e = true;
                 }
                 else{
@@ -95,5 +102,9 @@ export class EquivalenteService implements MethodsServicesDicionario<Equivalente
             return true;
         else
             return false;
+    }
+
+    private updateSubject(){
+        this.sCEn.next(this.cEn);
     }
 }

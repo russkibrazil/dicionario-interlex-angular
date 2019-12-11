@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { ConjugacaoPtService } from './conjugacao.service';
+import { ConjugacaoPtService } from './conjugacaoPt.service';
 import { EquivalenteService } from './equivalente.service';
 import { FraseologiaService } from './fraseologia.service';
 import { PalavraService } from './palavra.service';
 import { ReferenciaService } from './referencia.service';
 import { UsuarioService } from './usuarios.service';
+import { ConjugacaoEnService } from './conjugacaoEn.service';
 
 @NgModule({
     imports: [],
@@ -12,6 +13,7 @@ import { UsuarioService } from './usuarios.service';
     declarations: [],
     providers: [
         ConjugacaoPtService,
+        ConjugacaoEnService,
         EquivalenteService, 
         FraseologiaService,
         PalavraService, 

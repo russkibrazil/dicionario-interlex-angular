@@ -2,18 +2,23 @@ import { MethodsServicesDicionario } from './intefaceBase';
 import { Fraseologia } from '../models/Fraseologia';
 import { Injectable } from '@angular/core';
 import { MySqlConnectorService } from '../shared/mysql/mysql.service';
+import { RespostaMySql, RespostaErroMySql } from '../shared/mysql/resposta';
+import { Subject } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class FraseologiaService implements MethodsServicesDicionario<Fraseologia>{
     private fraseologia : Fraseologia[] = [];
+    public sFraseologia = new Subject<Fraseologia[]>();
 
     constructor(private mysql : MySqlConnectorService){}
 
     add(item: Fraseologia) {
         this.fraseologia = this.fraseologia.concat(item);
+        this.updateSubject();
     }    
     set(item: Fraseologia[]) {
         this.fraseologia = item;
+        this.updateSubject();
     }
     update(item: Fraseologia, updateOn: Fraseologia): boolean {
         const iu = this.fraseologia.findIndex(e => e == updateOn);
@@ -28,16 +33,29 @@ export class FraseologiaService implements MethodsServicesDicionario<Fraseologia
         if (id == -1)
             return false;
         this.fraseologia.splice(id,1);
+        this.updateSubject();
         return true;
     }
     fetch(filtros: string[]): boolean {
         const subs = this.mysql.readOperationFiltered('fraseologia', filtros);
         let e  = false;
         subs.subscribe(
-            resp => {
-                if (resp != undefined){
+            (resp : RespostaMySql<Fraseologia>) => {
+                if (resp.records.length > 0){
+                  this.set(resp.records);
+                  e = true;
+                }
+                else{
+                  console.log('Nenhum registro encontrado');
+                }
+            },
+            (err: RespostaErroMySql<Fraseologia>) => {
+                if (err.error.records.length > 0){
+                    this.set(err.error.records);
                     e = true;
-                    this.set(resp);
+                }
+                else{
+                    console.log('Nenhum registro encontrado');
                 }
             }
         );
@@ -49,6 +67,11 @@ export class FraseologiaService implements MethodsServicesDicionario<Fraseologia
     store(): boolean {
         throw new Error("Method not implemented.");
     }
+    get():Fraseologia[]{
+        return this.fraseologia;
+    }
 
-    
+    private updateSubject(){
+        this.sFraseologia.next(this.fraseologia);
+    }
 }

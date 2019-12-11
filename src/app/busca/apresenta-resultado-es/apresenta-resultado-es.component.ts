@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewerResultadoEs } from 'src/app/models/ViewerResultadoEs';
-import { Equivalente } from 'src/app/models/Equivalente';
+import { PalavraService } from 'src/app/services/palavra.service';
+import { ActivatedRoute } from '@angular/router';
+import { Palavra  } from 'src/app/models/Palavra';
+import { MostraPalavraEquivalenciasView } from 'src/app/models/MostraPalavraEquivalenciasView';
+import { Observable } from 'rxjs';
+import { EquivalenteService } from 'src/app/services/equivalente.service';
 
 @Component({
     selector: 'app-apresenta-resultado-es',
@@ -8,18 +13,27 @@ import { Equivalente } from 'src/app/models/Equivalente';
 })
 
 export class ApresentaResultadoEsComponent implements OnInit {
-    resultadosEs = new ViewerResultadoEs;
-    constructor() { }
+    resultadosEs = new ViewerResultadoEs();
+    observaView : Observable<MostraPalavraEquivalenciasView[]>;
+    pA;
+    constructor(
+        private pSvc : PalavraService,
+        private eSvc : EquivalenteService,
+        private actvRt : ActivatedRoute
+        ) {
+         }
 
-    ngOnInit() { 
-        this.resultadosEs.idPalavra = 1;
-        this.resultadosEs.lema = 'sdasdasd';
-        this.resultadosEs.cGram = 'classe gramatical';
-        this.resultadosEs.listaEq = [
-            new Equivalente(1, 2, 'Exemplo de uso de equivalente', 'equivalent use test string', 231, 'keyword',1),
-            new Equivalente(2,3, 'Outro exemplo', 'outro exemplo original traduzido', 2, 'outra palabra guia', 4)];
+    ngOnInit() {
+        //const lng = this.actvRt.snapshot.params['lng'];
+        const idP = this.actvRt.snapshot.params['id'];
+        const arr = this.pSvc.get();
+        this.pA  = arr.find(
+            p => p.Id === (+idP)// && p.Idioma == 'ES'
+        );
+
+        this.eSvc.fetchPEquivalentesView(this.pA.Id);
+        this.observaView = this.eSvc.sPEquivalentes.asObservable();
+        
         this.resultadosEs.sublema = 'meu sublema';
-        this.resultadosEs.genero = 'masculino';
-        this.resultadosEs.definicao = 'Este é um texto teste para escrever a definição do lema em questão. Não tenho um texto significativo para colocar aqui, portanto, vou somente encher linguiça até que eu me canse de escrever e considere este parágrafo inúti como acabado e suficiente para meu teste.';
     }
 }
