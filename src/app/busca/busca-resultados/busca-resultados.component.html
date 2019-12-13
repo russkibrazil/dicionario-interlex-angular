@@ -10,23 +10,28 @@
             <p>{{palavra.Lema}}</p>
         </div>
         <div class="col-sm-9">
-            <div class="col-sm-12"
+            <div class="col-sm-11"
                 *ngFor="let palavra of resultados | async"
-                (click)="onClickElemento()"
+                
             >
-                <h5>{{palavra.Lema}}</h5>
+                <h5 (click)="onClickElemento()">{{palavra.Lema}}</h5>
+                
+                <a class="btn btn-primary" [disabled]="aSvc.isAuthenticated()" [routerLink]="['../m/palavras', palavra.Id]"
+                routerLinkActive="router-link-active">Editar</a>
             </div>
         </div>
+
     </div>
     
     <div *ngIf="idioma !== 'es'">
         <div 
-            *ngFor="let palavra of resultados | async" 
-            (click)="onClickElemento(palavra.Idioma, palavra.Id, palavra.Lema)"
+            *ngFor="let palavra of resultados | async"      
             class="col-sm-12"
         >
-            <h5>{{palavra.Lema}}</h5>
+            <h5 (click)="onClickElemento(palavra.Idioma, palavra.Id, palavra.Lema)">{{palavra.Lema}}</h5>
             <p>{{palavra.Definicao}}</p>
+            <a class="btn btn-primary" [disabled]="aSvc.isAuthenticated()" [routerLink]="['../m/palavras', palavra.Id]"
+            routerLinkActive="router-link-active">Editar</a>
         </div>
     </div>
 

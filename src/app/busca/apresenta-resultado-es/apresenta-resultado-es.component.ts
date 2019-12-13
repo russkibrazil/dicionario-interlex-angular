@@ -31,7 +31,7 @@ export class ApresentaResultadoEsComponent implements OnInit {
             p => p.Id === (+idP)// && p.Idioma == 'ES'
         );
 
-        this.eSvc.fetchPEquivalentesView(this.pA.Id);
+        this.eSvc.fetchPEquivalentesView(this.pA.Id); //! https://github.com/mevdschee/php-crud-api/issues/29#issuecomment-189529621
         this.observaView = this.eSvc.sPEquivalentes.asObservable();
         
         this.resultadosEs.sublema = 'meu sublema';

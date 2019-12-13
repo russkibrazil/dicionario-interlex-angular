@@ -34,20 +34,43 @@ export class PalavrasComponent implements OnInit {
   constructor(private router:Router, private route:ActivatedRoute, private pSvc : PalavraService) { }
 
   ngOnInit() {
-    this.palavraForm = new FormGroup({
-      'lema' : new FormControl('', Validators.required),
-      'sublema' : new FormControl(),
-      'idioma' : new FormControl('', Validators.required),
-      'classeGramatical' : new FormControl('', Validators.required),
-      'genero' : new FormControl('null', Validators.required),
-      'definicao' : new FormControl(),
-      'notasGramaticais' : new FormControl(),
-      'notasCulturais' : new FormControl(),
-      'sinonimos' : new FormGroup({
-        'sinonimo1' : new FormControl(),
-        'sinonimo2' : new FormControl()
-      })
-    });
+    const id = this.route.snapshot.params['id'];
+    if (id !== undefined){
+      const vct = this.pSvc.get();
+      console.log(vct);
+      this.palavraAtiva = vct.find(
+        p => p.Id === (+id)
+      );
+      this.palavraForm = new FormGroup({
+        'lema' : new FormControl(this.palavraAtiva.Lema, Validators.required),
+        'sublema' : new FormControl(),
+        'idioma' : new FormControl(this.palavraAtiva.Idioma, Validators.required),
+        'classeGramatical' : new FormControl(this.palavraAtiva.ClasseGram, Validators.required),
+        'genero' : new FormControl(this.palavraAtiva.Genero, Validators.required),
+        'definicao' : new FormControl(this.palavraAtiva.Definicao),
+        'notasGramaticais' : new FormControl(this.palavraAtiva.notas_gramatica),
+        'notasCulturais' : new FormControl(this.palavraAtiva.notas_cultura),
+        'sinonimos' : new FormGroup({
+          'sinonimo1' : new FormControl(),
+          'sinonimo2' : new FormControl()
+        })
+      });
+    }else{
+      this.palavraForm = new FormGroup({
+        'lema' : new FormControl('', Validators.required),
+        'sublema' : new FormControl(),
+        'idioma' : new FormControl('', Validators.required),
+        'classeGramatical' : new FormControl('', Validators.required),
+        'genero' : new FormControl('', Validators.required),
+        'definicao' : new FormControl(),
+        'notasGramaticais' : new FormControl(),
+        'notasCulturais' : new FormControl(),
+        'sinonimos' : new FormGroup({
+          'sinonimo1' : new FormControl(),
+          'sinonimo2' : new FormControl()
+        })
+      });
+    }
   }
   //https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/select
   //https://www.w3schools.com/html/html_form_elements.asp

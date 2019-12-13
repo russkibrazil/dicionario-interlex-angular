@@ -10,8 +10,10 @@ import { AuthGuard } from '../shared/auth/auth-guard.service';
 import { ConjugacaoPt } from '../models/ConjugacaoPt';
 
 const routes: Routes = [
-    {path: 'm', canActivateChild:[AuthGuard], children:[
-        {path: 'edit', component: PalavrasComponent , children:[
+    //{path: 'm', canActivateChild:[AuthGuard], children:[
+    {path: 'm', children:[
+        {path: 'palavras', component:PalavrasComponent},
+        {path: 'palavras/:id', component: PalavrasComponent , children:[
             {path: 'equivalencias', component: EquivalenteComponent},
             {path: 'frase', component: FraseologiaComponent},
             {path: 'conjugacoes', component: ConjugacaoPt}

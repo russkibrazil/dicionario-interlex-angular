@@ -1,7 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { MySqlConnectorService } from '../mysql/mysql.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu-superior',
@@ -15,7 +14,7 @@ export class MenuSuperiorComponent implements OnInit {
   ngOnInit() {
   }
   onClickPalavras(){
-    this.router.navigate(['m/edit']);
+    this.router.navigate(['m/palavras']);
   }
   onClickHome(){}
   onClickBuscar(){

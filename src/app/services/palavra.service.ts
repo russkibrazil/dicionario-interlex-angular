@@ -18,6 +18,37 @@ export class PalavraService implements MethodsServicesDicionario<Palavra>{
         this.updateSubject();
     }
     set(p : Palavra[]) {
+        p.forEach( el => {
+            switch (el.Genero){
+                case 'M':
+                    el.Genero = 'Masculino';
+                    break;
+                case 'F':
+                    el.Genero = 'Feminino';
+                    break;
+                case 'N':
+                    el.Genero = 'Neutro';
+                    break;
+                case 'S':
+                    el.Genero = 'Sem Gênero';
+                    break;
+                default:
+                    break;
+            }
+            switch (el.Idioma){
+                case 'PT':
+                    el.Idioma = 'Português';
+                    break;
+                case 'EN':
+                    el.Idioma = 'Inglês';
+                    break;
+                case 'ES':
+                    el.Idioma = 'Espanhol';
+                    break;
+                default:
+                    break;
+            }
+        });
         this.palavras = p;
         this.updateSubject();
     }
