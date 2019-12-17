@@ -16,8 +16,8 @@
             >
                 <h5 (click)="onClickElemento()">{{palavra.Lema}}</h5>
                 
-                <a class="btn btn-primary" [disabled]="aSvc.isAuthenticated()" [routerLink]="['../m/palavras', palavra.Id]"
-                routerLinkActive="router-link-active">Editar</a>
+                <button class="btn btn-primary" [disabled]="aSvc.isAuthenticated()" [routerLink]="['../m/palavras', palavra.Id]"
+                routerLinkActive="router-link-active">Editar</button>
             </div>
         </div>
 
@@ -30,8 +30,8 @@
         >
             <h5 (click)="onClickElemento(palavra.Idioma, palavra.Id, palavra.Lema)">{{palavra.Lema}}</h5>
             <p>{{palavra.Definicao}}</p>
-            <a class="btn btn-primary" [disabled]="aSvc.isAuthenticated()" [routerLink]="['../m/palavras', palavra.Id]"
-            routerLinkActive="router-link-active">Editar</a>
+            <button class="btn btn-primary" [disabled]="aSvc.isAuthenticated()" [routerLink]="['../m/palavras', palavra.Id]"
+            routerLinkActive="router-link-active">Editar</button>
         </div>
     </div>
 

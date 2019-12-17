@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm">
+            <form [formGroup]="buscaForm" (ngSubmit)="onSubmit()">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" formControlName="busca">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Bu</button>
+                    </div>
+                </div>     
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-sm">
+            <table class="table table-light" *ngIf="tabela == 'referencias'">
+                <tbody>
+                    <tr *ngFor="let item of obsvTabela | async">
+                        <td>{{item.Cod}}</td>
+                        <td>{{item.Descricao}}</td>
+                        <td>{{item.Ano}}</td>
+                        <td>{{item.Autor}}</td>
+                        <a class="btn btn-secondary" [routerLink]="['../',tabela, item.Cod]" routerLinkActive="router-link-active">Editar</a>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-light" *ngIf="tabela == 'usr'">
+                <tbody>
+                    <tr *ngFor="let item of obsvTabela | async">
+                        <td>{{item.usr }}</td>
+                        <td>{{item.nome}}</td>
+                        <td>{{item.email}}</td>
+                        <td>{{item.telefone}}</td>
+                        <a class="btn btn-secondary" [routerLink]="['../','usuarios', item.usr]" routerLinkActive="router-link-active">Editar</a>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

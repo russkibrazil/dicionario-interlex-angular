@@ -8,6 +8,7 @@ import { EquivalenteComponent } from './equivalente/equivalente.component';
 import { ReferenciasComponent } from './referencias/referencias.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ManutenRoutingModule } from './manuten-routing.module';
+import { BuscaGenericaComponent } from './busca-generica/busca-generica.component';
 
 //import { ManutenComponent } from './manuten.component';
 
@@ -20,7 +21,8 @@ import { ManutenRoutingModule } from './manuten-routing.module';
         PalavrasComponent,
         EquivalenteComponent,
         ReferenciasComponent,
-        UsuariosComponent
+        UsuariosComponent,
+        BuscaGenericaComponent
     ],
     providers: [],
 })

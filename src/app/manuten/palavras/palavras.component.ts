@@ -37,7 +37,6 @@ export class PalavrasComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
     if (id !== undefined){
       const vct = this.pSvc.get();
-      console.log(vct);
       this.palavraAtiva = vct.find(
         p => p.Id === (+id)
       );

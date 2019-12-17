@@ -8,19 +8,28 @@ import { EquivalenteComponent } from './equivalente/equivalente.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { AuthGuard } from '../shared/auth/auth-guard.service';
 import { ConjugacaoPt } from '../models/ConjugacaoPt';
+import { BuscaGenericaComponent } from './busca-generica/busca-generica.component';
 
 const routes: Routes = [
     //{path: 'm', canActivateChild:[AuthGuard], children:[
     {path: 'm', children:[
         {path: 'palavras', component:PalavrasComponent},
-        {path: 'palavras/:id', component: PalavrasComponent , children:[
+        {path: 'palavras/:id', children:[
+            {path: '', component: PalavrasComponent},
             {path: 'equivalencias', component: EquivalenteComponent},
             {path: 'frase', component: FraseologiaComponent},
             {path: 'conjugacoes', component: ConjugacaoPt}
         ]},
         {path: 'pguia', component: PalavraGuiaComponent},
-        {path: 'referencias', component: ReferenciasComponent},
-        {path: 'usuarios', component: UsuariosComponent}
+        {path: 'referencias', children:[
+            {path: '', component: ReferenciasComponent, pathMatch: 'full'},
+            {path: ':cod', component: ReferenciasComponent}
+        ]},
+        {path: 'usuarios', children:[
+            {path:'',  component: UsuariosComponent, pathMatch: 'full'},
+            {path: ':usr', component: UsuariosComponent}
+        ]},
+        {path: 'buscar', component: BuscaGenericaComponent}
     ]}
 ]
 

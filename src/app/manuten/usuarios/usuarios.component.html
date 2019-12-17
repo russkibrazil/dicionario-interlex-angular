@@ -16,11 +16,11 @@
                     <div class="form-group">
                         <label for="senha">Digite uma senha</label>
                         <input 
-                            id="senha" 
+                            id="entrasenha" 
                             class="form-control" 
                             type="text"
-                            name="senha"
-                            formControlName="senha"
+                            name="entrasenha"
+                            formControlName="entrasenha"
                         >
                     </div>
                     <div class="form-group">
@@ -83,6 +83,7 @@
             </form>
         </div>
         <div class="col-sm-1">
+            <a class="btn btn-secondary" (click)="onClickBuscar()" >Buscar</a>
             <app-botoes-controle (buttonEvent)="sideButtonClicked($event)"></app-botoes-controle>
         </div>
     </div>

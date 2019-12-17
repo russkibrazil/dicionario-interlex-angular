@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ReferenciaService } from 'src/app/services/referencia.service';
 import { Referencia } from 'src/app/models/Referencia';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-referencias',
@@ -12,19 +13,36 @@ export class ReferenciasComponent implements OnInit {
 
   referenciasForm : FormGroup;
   private referenciaAtiva : Referencia;
-  private bancoReferencias : Referencia[];
   private estadoNovo = true;
   private pos : number;
 
-  constructor(private rSvc : ReferenciaService) { }
+  constructor(private rSvc : ReferenciaService, private route : ActivatedRoute, private router : Router) { }
 
   ngOnInit() {
-    this.referenciasForm = new FormGroup({
-      'codigo' : new FormControl('', [Validators.required, Validators.pattern(/^[A-Z]{2,3}[0-9]{2}[a-z]?$/)]),
-      'autor' : new FormControl('null', Validators.required),
-      'descricao' : new FormControl(),
-      'ano' : new FormControl('', [Validators.required, Validators.pattern(/^[1-2][0-9]{3}$/)])
-    })
+    const cod = this.route.snapshot.params['cod'];
+    if (cod !== undefined && cod !== 'buscar'){
+      const vct = this.rSvc.get();
+      this.referenciaAtiva = vct.find(
+        r => r.Cod === cod
+      );
+      this.referenciasForm = new FormGroup({
+        'codigo' : new FormControl(this.referenciaAtiva.Cod, [Validators.required, Validators.pattern(/^[A-Z]{2,3}[0-9]{2}[a-z]?$/)]),
+        'autor' : new FormControl(this.referenciaAtiva.Autor, Validators.required),
+        'descricao' : new FormControl(this.referenciaAtiva.Descricao),
+        'ano' : new FormControl(this.referenciaAtiva.Ano, [Validators.required, Validators.pattern(/^[1-2][0-9]{3}$/)])
+      });
+    }else{
+      this.referenciasForm = new FormGroup({
+        'codigo' : new FormControl('', [Validators.required, Validators.pattern(/^[A-Z]{2,3}[0-9]{2}[a-z]?$/)]),
+        'autor' : new FormControl('', Validators.required),
+        'descricao' : new FormControl(),
+        'ano' : new FormControl('', [Validators.required, Validators.pattern(/^[1-2][0-9]{3}$/)])
+      });
+    }
+  }
+
+  onClickBuscar(){
+      this.router.navigate(['../../buscar'], {relativeTo:this.route, queryParams: {tabela: 'referencias'}});
   }
 
   onSubmit(){}
@@ -59,7 +77,7 @@ export class ReferenciasComponent implements OnInit {
         this.rSvc.delete(this.referenciaAtiva);
         window.alert('Apagado!');
       break;
-      case 'primeiro':
+      /*case 'primeiro':
         this.pos = 0;
         this.referenciaAtiva = this.bancoReferencias[this.pos];
       break;
@@ -76,7 +94,7 @@ export class ReferenciasComponent implements OnInit {
       case 'ultimo':
         this.pos = this.bancoReferencias.length - 1;
         this.referenciaAtiva = this.bancoReferencias[this.pos];
-      break;
+      break;*/
       default:
         break;
     }

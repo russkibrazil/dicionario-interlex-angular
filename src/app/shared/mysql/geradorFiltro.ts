@@ -1,6 +1,4 @@
 export class GeradorFiltro{
-    private primeiroFiltro : boolean = true;
-    private nFiltro : number = 0;
     static stringContem(campo:string, busca:string, negar?:boolean){
         if (!negar){
             return (campo + ',cs,' + busca);
@@ -90,13 +88,12 @@ export class GeradorFiltro{
             return '&filter=';
         }    
     }
-    filtroOr(){
-        if (this.primeiroFiltro){
-            this.primeiroFiltro = false;
-            this.nFiltro = this.nFiltro + 1;
-            return ('filter' + this.nFiltro);
-        }else{
-            return ('&filter' + this.nFiltro);
-        }
+    static filtroOr(index : number = 1){
+        if (index < 1 || index > 8)
+            throw "Fora do índice suportado!";
+        if (index === 1) 
+            return ('filter1=');
+        else
+            return ('&filter' + index + '=');
     }
 }
