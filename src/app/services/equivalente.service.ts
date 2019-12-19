@@ -10,16 +10,18 @@ import { RespostaMySql, RespostaErroMySql } from '../shared/mysql/resposta';
 @Injectable({providedIn: 'root'})
 export class EquivalenteService implements MethodsServicesDicionario<Equivalente>{
     private equivalentes : Equivalente[] = [];
-    public sEquivalentes : Subject<Equivalente[]>
+    public sEquivalentes = new  Subject<Equivalente[]>();
     public sPEquivalentes = new Subject<MostraPalavraEquivalenciasView[]>();
 
     constructor(private mysql : MySqlConnectorService){}
 
     add(item: Equivalente) {
         this.equivalentes = this.equivalentes.concat(item);
+        this.updateSubject();
     }    
     set(item: Equivalente[]) {
         this.equivalentes = item;
+        this.updateSubject();
     }
     update(item: Equivalente, updateOn: Equivalente): boolean {
         const iu = this.equivalentes.findIndex(e => e === updateOn);
@@ -34,10 +36,11 @@ export class EquivalenteService implements MethodsServicesDicionario<Equivalente
         if (id == -1)
             return false;
         this.equivalentes.splice(id, 1);
+        this.updateSubject();
         return true;
     }
     fetch(filtros: string[]): boolean {
-        const subsc = this.mysql.readOperationFiltered('equivalente', filtros);
+        const subsc = this.mysql.readOperationFiltered('equivalencias', filtros);
         let e = false;
         subsc.subscribe(
             (resp : RespostaMySql<Equivalente>) => {
@@ -95,5 +98,12 @@ export class EquivalenteService implements MethodsServicesDicionario<Equivalente
             return true;
         else
             return false;
+    }
+    get(){
+        return this.equivalentes;
+    }
+
+    private updateSubject(){
+        this.sEquivalentes.next(this.equivalentes);
     }
 }

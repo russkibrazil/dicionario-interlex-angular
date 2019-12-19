@@ -1,10 +1,6 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm">
-            <input type="text" id="busca" name="busca">
-            <button class="btn btn-success" (click)="onBuscar()">Buscar</button>
-        </div>
-        <div class="col-sm">
             <form action="" [formGroup]="palavraForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label for="lema">Lema</label>
@@ -55,10 +51,11 @@
             </form>
         </div>
         <div class="col-sm-1">
+            <button class="btn btn-secondary" [routerLink]="['/b']">Buscar</button>
             <app-botoes-controle (buttonEvent)="sideButtonClicked($event)"></app-botoes-controle><br>
-            <button class="btn btn-secondary" (click)="onClickEquivalentes()">Equivalentes</button><br>
-            <button class="btn btn-secondary" (click)="onClickConjugacoes()">Conjugações</button><br>
-            <button class="btn btn-secondary" (click)="onClickFraseologia()">Fraseologia</button><br>
+            <button class="btn btn-secondary" [routerLink]="['equivalencias']" routerLinkActive="router-link-active" >Equivalentes</button><br>
+            <button class="btn btn-secondary" [routerLink]="['conjugacoes']" routerLinkActive="router-link-active" >Conjugações</button><br>
+            <button class="btn btn-secondary" [routerLink]="['frase']" routerLinkActive="router-link-active" >Fraseologia</button><br>
         </div>
     </div>
 </div>

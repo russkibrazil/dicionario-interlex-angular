@@ -105,6 +105,12 @@ export class PalavraService implements MethodsServicesDicionario<Palavra>{
     getPalavraAtiva():Palavra{
         return this.palavraAtiva;
     }
+    getElement(id : number):Palavra{
+        if (id !== undefined)
+            return this.palavras.find(
+                p => p.Id === id
+            )
+    }
 
     get() : Palavra[] {
         return this.palavras;

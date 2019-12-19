@@ -4,6 +4,8 @@ import { Fraseologia } from 'src/app/models/Fraseologia';
 import { FraseologiaService } from 'src/app/services/fraseologia.service';
 import { PalavraService } from 'src/app/services/palavra.service';
 import { Palavra } from 'src/app/models/Palavra';
+import { ActivatedRoute } from '@angular/router';
+import { GeradorFiltro } from 'src/app/shared/mysql/geradorFiltro';
 
 @Component({
   selector: 'app-fraseologia',
@@ -12,26 +14,42 @@ import { Palavra } from 'src/app/models/Palavra';
 })
 export class FraseologiaComponent implements OnInit {
   private fraseForm : FormGroup;
-  private bancoFrases:Fraseologia[];
+  private bancoFrases:Fraseologia[] = [];
   private fraseAtiva:Fraseologia;
   private tipos = ['Uso comum', 'Expressão idiomática'];
-  private pos :number;
+  private pos :number = 0;
   private estadoNovo = true;
-  private pA : Palavra;
 
-  constructor(private fSvc : FraseologiaService, private pSvc : PalavraService) { }
-
-  ngOnInit() {
-    this.pA = this.pSvc.getPalavraAtiva();
+  constructor(private fSvc : FraseologiaService, private pSvc : PalavraService, private actRoute : ActivatedRoute) {
     this.fraseForm = new FormGroup({
       'fraseOriginal' : new FormControl('', [Validators.required]),
-      'fraseEquvalente' :  new FormControl('', [Validators.required]),
+      'fraseEquivalente' :  new FormControl('', [Validators.required]),
       'exemploForiginal' : new FormControl('', Validators.required),
       'exemploFequivalente' : new FormControl('', Validators.required),
-      'notasGramaticais' : new FormControl(''),
-      'notasCulturais' : new FormControl(''),
-      'tipos' : new FormControl('')
+      'notasGramaticais' : new FormControl(),
+      'notasCulturais' : new FormControl(),
+      'tipos' : new FormControl()
     });
+   }
+
+  ngOnInit() {
+    const id = this.actRoute.snapshot.paramMap.get('id');
+    this.fSvc.fetch([GeradorFiltro.filtroAnd(true) + GeradorFiltro.igual('idPalavra', (+id))]);
+    this.fSvc.sFraseologia.subscribe(
+      els => {
+        this.bancoFrases = els;
+        if (this.bancoFrases.length > 0){
+          this.fraseAtiva = this.bancoFrases[this.pos];
+          this.fraseForm.patchValue({'fraseOriginal' : this.fraseAtiva.fraseOrig});
+          this.fraseForm.patchValue({'fraseEquivalente' : this.fraseAtiva.fraseEquiv});
+          this.fraseForm.patchValue({'exemploForiginal' : this.fraseAtiva.exemploOriginal});
+          this.fraseForm.patchValue({'exemploFequivalente' : this.fraseAtiva.exemploEquivalente});
+          this.fraseForm.patchValue({'notasGramaticais' : this.fraseAtiva.notasGramatica});
+          this.fraseForm.patchValue({'notasCulturais' : this.fraseAtiva.notasCultura});
+          this.fraseForm.patchValue({'tipos' : this.fraseAtiva.categoria});
+        }
+      }
+    )
   }
 
   onSubmit(){

@@ -9,6 +9,8 @@ import { ReferenciasComponent } from './referencias/referencias.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ManutenRoutingModule } from './manuten-routing.module';
 import { BuscaGenericaComponent } from './busca-generica/busca-generica.component';
+import { ConjPtComponent } from './conj-pt/conj-pt.component';
+import { ConjEnComponent } from './conj-en/conj-en.component';
 
 //import { ManutenComponent } from './manuten.component';
 
@@ -22,7 +24,9 @@ import { BuscaGenericaComponent } from './busca-generica/busca-generica.componen
         EquivalenteComponent,
         ReferenciasComponent,
         UsuariosComponent,
-        BuscaGenericaComponent
+        BuscaGenericaComponent,
+        ConjPtComponent,
+        ConjEnComponent
     ],
     providers: [],
 })

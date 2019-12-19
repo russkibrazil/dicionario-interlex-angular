@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm">
-            <form action="" [formGroup]="equivalenteForm"] (ngSubmit)="onSubmit()">
+            <form action="" [formGroup]="equivalenteForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label for="lemaEquivalente">Lema Equivalente</label>
                     <input 
@@ -63,23 +63,23 @@
                     >
                 </div>
                 <div class="form-group">
-                    <label for="notasGramaticais">Notas gramaticais</label>
+                    <label for="notasGramatica">Notas gramaticais</label>
                     <textarea 
-                        id="notasGramaticais" 
+                        id="notasGramatica" 
                         class="form-control" 
-                        name="notasGramaticais" 
+                        name="notasGramatica" 
                         rows="3"
-                        formControlName="notasGramaticais"
+                        formControlName="notasGramatica"
                     ></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="notasCulturais">Notas Culturais</label>
+                    <label for="notasCultura">Notas Culturais</label>
                     <textarea 
-                        id="notasCulturais" 
+                        id="notasCultura" 
                         class="form-control" 
-                        name="notasCulturais" 
+                        name="notasCultura" 
                         rows="3"
-                        formControlName="notasCulturais"
+                        formControlName="notasCultura"
                     ></textarea>
                 </div>
             </form>

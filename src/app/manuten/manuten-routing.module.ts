@@ -9,6 +9,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { AuthGuard } from '../shared/auth/auth-guard.service';
 import { ConjugacaoPt } from '../models/ConjugacaoPt';
 import { BuscaGenericaComponent } from './busca-generica/busca-generica.component';
+import { ConjugacaoEn } from '../models/ConjugacaoEn';
 
 const routes: Routes = [
     //{path: 'm', canActivateChild:[AuthGuard], children:[
@@ -18,7 +19,8 @@ const routes: Routes = [
             {path: '', component: PalavrasComponent},
             {path: 'equivalencias', component: EquivalenteComponent},
             {path: 'frase', component: FraseologiaComponent},
-            {path: 'conjugacoes', component: ConjugacaoPt}
+            {path: 'conjugacoesPt', component: ConjugacaoPt},
+            {path: 'conjugacoesEn', component: ConjugacaoEn},
         ]},
         {path: 'pguia', component: PalavraGuiaComponent},
         {path: 'referencias', children:[

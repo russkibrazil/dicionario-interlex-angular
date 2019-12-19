@@ -27,9 +27,7 @@ export class PalavrasComponent implements OnInit {
   ];
   private idiomas = ['Português', 'Espanhol', 'Inglês'];
   private palavraAtiva : Palavra;
-  private bancoPalavras : Palavra[];
   private estadoNovo = true;
-  private pos : number;
   
   constructor(private router:Router, private route:ActivatedRoute, private pSvc : PalavraService) { }
 
@@ -77,21 +75,8 @@ export class PalavrasComponent implements OnInit {
   //https://www.concretepage.com/angular/angular-select-option-reactive-form
   onSubmit(){
 
-  }        
+  }
 
-  onClickEquivalentes(){
-    this.pSvc.setPalavraAtiva(this.palavraAtiva);
-    this.router.navigate(['equivalencias'],{relativeTo: this.route});
-  }
-  onClickFraseologia(){
-    this.pSvc.setPalavraAtiva(this.palavraAtiva);
-    this.router.navigate(['frase'],{relativeTo: this.route});
-  }
-  onClickConjugacoes(){
-    this.pSvc.setPalavraAtiva(this.palavraAtiva);
-    this.router.navigate(['conjugacoes'],{relativeTo: this.route});
-  }
-  
   sideButtonClicked(evento:{tipo:string}){
     const e = evento.tipo;
     switch (e){
@@ -125,24 +110,6 @@ export class PalavrasComponent implements OnInit {
       case 'apagar':
         this.pSvc.delete(this.palavraAtiva);
         window.alert('Apagado!');
-      break;
-      case 'primeiro':
-        this.pos = 0;
-        this.palavraAtiva = this.bancoPalavras[this.pos];
-      break;
-      case 'anterior':
-        if (this.pos > 0)
-          this.pos--;
-        this.palavraAtiva = this.bancoPalavras[this.pos];
-      break;
-      case 'proximo':
-        if (this.pos < this.bancoPalavras.length)
-          this.pos--;
-        this.palavraAtiva = this.bancoPalavras[this.pos];
-      break;
-      case 'ultimo':
-        this.pos = this.bancoPalavras.length - 1;
-        this.palavraAtiva = this.bancoPalavras[this.pos];
       break;
       default:
         break;

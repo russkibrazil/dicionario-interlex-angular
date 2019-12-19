@@ -4,7 +4,7 @@
             <form [formGroup]=fraseForm (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label for="fraseOriginal">Frase Original</label>
-                    <input type="text" name="fraseOriginal" id="fraseOriginal"
+                    <input type="text" class="form-control" name="fraseOriginal" id="fraseOriginal"
                     formControlName="fraseOriginal"
                     >
                 </div>
@@ -34,8 +34,10 @@
                     formControlName="notasCulturais">
                 </div>
                 <div class="form-group">
-                    <label for="tipo">Tipo</label>
-                    <option *ngFor="let i of tipos" [ngValue]="i">{{i}}</option>
+                    <label for="tipos">Tipo</label>
+                    <select formControlName="tipos">
+                        <option *ngFor="let i of tipos" [ngValue]="i">{{i}}</option>
+                    </select>
                 </div>
                 
                 <button class="btn btn-primary" type="submit">Salvar</button>

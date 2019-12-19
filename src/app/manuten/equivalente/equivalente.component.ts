@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { PalavraService } from 'src/app/services/palavra.service';
 import { EquivalenteService } from 'src/app/services/equivalente.service';
 import { Palavra } from 'src/app/models/Palavra';
 import { Equivalente } from 'src/app/models/Equivalente';
+import { ActivatedRoute } from '@angular/router';
+import { GeradorFiltro } from 'src/app/shared/mysql/geradorFiltro';
 
 @Component({
   selector: 'app-equivalente',
@@ -15,28 +16,43 @@ export class EquivalenteComponent implements OnInit {
   equivalenteForm : FormGroup;
   private pA : Palavra;
   private equivalenteAtivo : Equivalente;
-  private bancoEquivalentes : Equivalente[];
+  private bancoEquivalentes : Equivalente[] = [];
   private estadoNovo = true;
-  private pos : number;
+  private pos : number = 0;
 
-  constructor(private pSvc : PalavraService, private eSvc : EquivalenteService) { }
-
-  ngOnInit() {
+  constructor(private eSvc : EquivalenteService, private actRoute : ActivatedRoute) {
     this.equivalenteForm = new FormGroup({
       'lemaEquivalente' : new FormControl('', Validators.required),
       'numOrdemApresentacao' : new FormControl('', [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
-      'heteros' : new FormGroup({
         'heterogenerico' : new FormControl(),
         'heterotonico' : new FormControl(),
-        'heterossemantico' : new FormControl()
-      }),
-      'exemploOriginal' : new FormControl(),
-      'exemploEquivalente' : new FormControl(),
-      'palavraGuia' : new FormControl(),
-      'referencia' : new FormControl(),
+        'heterossemantico' : new FormControl(),
+      'exemploOriginal' : new FormControl(''),
+      'exemploEquivalente' : new FormControl(''),
+      'palavraGuia' : new FormControl(''),
+      'referencia' : new FormControl(''),
       'notasGramatica' : new FormControl(),
       'notasCultura' : new FormControl()
-    })
+    });
+   }
+
+  ngOnInit() {
+    const id = this.actRoute.snapshot.paramMap.get('id');
+    this.eSvc.fetch([GeradorFiltro.filtroAnd(true) + GeradorFiltro.igual('Origem', (+id))]);
+    this.eSvc.sEquivalentes.subscribe(
+      els => {
+        this.bancoEquivalentes = els;
+        if (this.bancoEquivalentes.length > 0){
+          this.equivalenteAtivo = this.bancoEquivalentes[this.pos];
+          this.equivalenteForm.patchValue({'lemaEquivalente' : this.equivalenteAtivo.equivalente});
+          this.equivalenteForm.patchValue({'numOrdemApresentacao' : this.equivalenteAtivo.nApresentacao});
+          this.equivalenteForm.patchValue({'exemploOriginal' : this.equivalenteAtivo.Exemplo});
+          this.equivalenteForm.patchValue({'exemploEquivalente' : this.equivalenteAtivo.Exemplo_Traduzido});
+          this.equivalenteForm.patchValue({'palavraGuia' : this.equivalenteAtivo.PGuia});
+          this.equivalenteForm.patchValue({'referencia' : this.equivalenteAtivo.Referencia});
+        }
+      }
+    );
   }
 
   onSubmit(){}
