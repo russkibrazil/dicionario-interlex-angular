@@ -18,6 +18,11 @@ export class EquivalenteService implements MethodsServicesDicionario<Equivalente
     add(item: Equivalente) {
         this.equivalentes = this.equivalentes.concat(item);
         this.updateSubject();
+        const c = this.mysql.createOperation('equivalencias', JSON.stringify(item));
+        c.subscribe(
+            r => console.log(r),
+            er => console.log(er)
+        );
     }    
     set(item: Equivalente[]) {
         this.equivalentes = item;
@@ -28,7 +33,7 @@ export class EquivalenteService implements MethodsServicesDicionario<Equivalente
         if (iu == -1)
             return false;
         this.equivalentes.splice(iu,1);
-        this.add(item);
+        //this.add(item);
         return true;
     }
     delete(item: Equivalente): boolean {

@@ -56,19 +56,17 @@ export class MySqlConnectorService {
 
     updateOperation(tabela:string, dados:string, filtro:string[]): Observable<any> {
         let target : string = this.baseUrl + '/' + tabela + '?';
-        target.concat(...filtro);
+        target = target.concat(...filtro);
         return this.httpClient.put(target, dados);
     }
 
-    updateOperationPk(tabela:string, dados:string, filtro:string[]): Observable<any> {
-        let target : string = this.baseUrl + '/' + tabela + '?';
-        target.concat(...filtro);
+    updateOperationPk(tabela:string, dados:string, pk : string): Observable<any> {
+        let target : string = this.baseUrl + '/' + tabela + '/' + pk;
         return this.httpClient.put(target, dados);
     }
 
-    deleteOperation(tabela:string, filtro:string[]) : Observable<any>{
-        let target : string = this.baseUrl + '/' + tabela + '?';
-        target.concat(...filtro);
+    deleteOperation(tabela:string, pk : string) : Observable<any>{
+        let target : string = this.baseUrl + '/' + tabela + '/' + pk;
         return this.httpClient.delete(target);
     }
 }

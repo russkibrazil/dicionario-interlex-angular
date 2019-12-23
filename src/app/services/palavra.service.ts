@@ -7,6 +7,9 @@ import { RespostaMySql, RespostaErroMySql } from '../shared/mysql/resposta';
 
 @Injectable({providedIn: 'root'})
 export class PalavraService implements MethodsServicesDicionario<Palavra>{
+    store(items: Palavra[]): boolean {
+        throw new Error("Method not implemented.");
+    }
     private palavras : Palavra[] = [];
     private palavraAtiva : Palavra;
     public sPalavras = new Subject<Palavra[]>();
@@ -15,6 +18,7 @@ export class PalavraService implements MethodsServicesDicionario<Palavra>{
 
     add(p : Palavra) {
         this.palavras = this.palavras.concat(p);
+        this.storeNewItems(p);
         this.updateSubject();
     }
     set(p : Palavra[]) {
@@ -57,7 +61,9 @@ export class PalavraService implements MethodsServicesDicionario<Palavra>{
         if (iu == -1)
             return false;
         this.palavras.splice(iu,1);
-        this.add(p);
+        this.palavras = this.palavras.concat(p);
+        this.storeUpdatedItems(p);
+        this.updateSubject();
         return true;
     }
     delete(p : Palavra) {
@@ -66,6 +72,11 @@ export class PalavraService implements MethodsServicesDicionario<Palavra>{
             return false;
         this.palavras.splice(id,1);
         this.updateSubject();
+        const c = this.mysql.deleteOperation('palavra', p.Id.toString());
+        c.subscribe(
+            r => console.log(r),
+            er => console.log(er)
+        );
         return true;
     }
     fetch(filtros : string[]) {
@@ -96,15 +107,79 @@ export class PalavraService implements MethodsServicesDicionario<Palavra>{
         else
             return false;
     }
-    store() : boolean {
-        throw new Error("Method not implemented.");
+    private storeNewItems(item : Palavra) {
+        switch (item.Genero){
+            case 'Masculino':
+                item.Genero = 'M';
+                break;
+            case 'Feminino':
+                item.Genero = 'F';
+                break;
+            case 'Neutro':
+                item.Genero = 'N';
+                break;
+            case 'Sem gênero':
+                item.Genero = 'S';
+                break;
+            default:
+                break;
+        }
+        switch (item.Idioma){
+            case 'Portguês':
+                item.Idioma = 'PT';
+                break;
+            case 'Inglês':
+                item.Idioma = 'EN';
+                break;
+            case 'Espanhol':
+                item.Idioma = 'ES';
+                break;
+            default:
+                break;
+        }
+        const subsc = this.mysql.createOperation('palavra', JSON.stringify(item));
+        subsc.subscribe(
+            resp => console.log(resp),
+            err => console.log('error: ', err)
+        )
     }
-    setPalavraAtiva(item: Palavra){
-        this.palavraAtiva = item;
+    private storeUpdatedItems(item : Palavra) {
+        switch (item.Genero){
+            case 'Masculino':
+                item.Genero = 'M';
+                break;
+            case 'Feminino':
+                item.Genero = 'F';
+                break;
+            case 'Neutro':
+                item.Genero = 'N';
+                break;
+            case 'Sem gênero':
+                item.Genero = 'S';
+                break;
+            default:
+                break;
+        }
+        switch (item.Idioma){
+            case 'Portguês':
+                item.Idioma = 'PT';
+                break;
+            case 'Inglês':
+                item.Idioma = 'EN';
+                break;
+            case 'Espanhol':
+                item.Idioma = 'ES';
+                break;
+            default:
+                break;
+        }
+        const subsc = this.mysql.updateOperationPk('palavra', JSON.stringify(item), item.Id.toString());
+        subsc.subscribe(
+            resp => console.log(resp),
+            err => console.log('error: ', err)
+        )
     }
-    getPalavraAtiva():Palavra{
-        return this.palavraAtiva;
-    }
+
     getElement(id : number):Palavra{
         if (id !== undefined)
             return this.palavras.find(

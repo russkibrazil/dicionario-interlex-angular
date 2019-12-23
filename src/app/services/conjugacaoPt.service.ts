@@ -15,6 +15,11 @@ export class ConjugacaoPtService implements MethodsServicesDicionario<Conjugacao
     add(item: ConjugacaoPt) {
         this.cPt = this.cPt.concat(item);
         this.updateSubject();
+        const c = this.mysql.createOperation('conjugacao', JSON.stringify(item));
+        c.subscribe(
+            r => console.log(r),
+            er => console.log(er)
+        );
     }    
     set(item: ConjugacaoPt[]) {
         this.cPt = item;
@@ -25,7 +30,13 @@ export class ConjugacaoPtService implements MethodsServicesDicionario<Conjugacao
         if (iu == -1)
             return false;
         this.cPt.splice(iu, 1);
-        this.add(item);
+        this.cPt = this.cPt.concat(item);
+        this.updateSubject();
+        const c = this.mysql.updateOperationPk('conjugacao', JSON.stringify(item), updateOn.id.toString());
+        c.subscribe(
+            r => console.log(r),
+            er => console.log(er)
+        );
         return true;
     }
     delete(item: ConjugacaoPt): boolean {
@@ -34,6 +45,11 @@ export class ConjugacaoPtService implements MethodsServicesDicionario<Conjugacao
             return false;
         this.cPt.splice(id, 1);
         this.updateSubject();
+        const c = this.mysql.createOperation('conjugacao', JSON.stringify(item));
+        c.subscribe(
+            r => console.log(r),
+            er => console.log(er)
+        );
         return true;
     }
     fetch(filtros: string[]): boolean {

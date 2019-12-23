@@ -15,8 +15,30 @@ export class UsuarioService implements MethodsServicesDicionario<Usuario>{
     add(item: Usuario) {
         this.usuarios = this.usuarios.concat(item);
         this.updateSubject();
+        const c = this.mysql.createOperation('usr', JSON.stringify(item));
+        c.subscribe(
+            r => console.log(r),
+            er => console.log(er)
+        );
     }    
     set(item: Usuario[]) {
+        item.forEach(
+            el => {
+                switch (el.nivel_permissao){
+                    case 'ADM':
+                        el.nivel_permissao = 'Administrador';
+                        break;
+                    case 'EDT' :
+                        el.nivel_permissao = 'Editor';
+                        break;
+                    case 'USR':
+                        el.nivel_permissao = 'Usuário';
+                        break;
+                    default: 
+                        throw "Permissão não encontrada";
+                }
+            }
+        )
         this.usuarios = item;
         this.updateSubject();
     }
@@ -25,7 +47,13 @@ export class UsuarioService implements MethodsServicesDicionario<Usuario>{
         if (iu == -1)
             return false;
         this.usuarios.splice(iu,1);
-        this.add(item);
+        this.usuarios = this.usuarios.concat(item);
+        this.updateSubject();
+        const c = this.mysql.updateOperationPk('usr', JSON.stringify(item), updateOn.usr);
+        c.subscribe(
+            r => console.log(r),
+            er => console.log(er)
+        );
         return true;
     }
     delete(item: Usuario): boolean {
@@ -34,6 +62,11 @@ export class UsuarioService implements MethodsServicesDicionario<Usuario>{
             return false;
         this.usuarios.splice(id,1);
         this.updateSubject();
+        const c = this.mysql.deleteOperation('usr', item.usr);
+        c.subscribe(
+            r => console.log(r),
+            er => console.log(er)
+        );
         return true;
     }
     fetch(filtros: string[]): boolean {

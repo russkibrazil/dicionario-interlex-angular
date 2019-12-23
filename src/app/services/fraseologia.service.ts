@@ -15,6 +15,11 @@ export class FraseologiaService implements MethodsServicesDicionario<Fraseologia
     add(item: Fraseologia) {
         this.fraseologia = this.fraseologia.concat(item);
         this.updateSubject();
+        const c = this.mysql.createOperation('fraseologia', JSON.stringify(item));
+        c.subscribe(
+            r => console.log(r),
+            er => console.log(er)
+        );
     }    
     set(item: Fraseologia[]) {
         this.fraseologia = item;
@@ -25,7 +30,8 @@ export class FraseologiaService implements MethodsServicesDicionario<Fraseologia
         if (iu == -1)
             return false;
         this.fraseologia.splice(iu,1);
-        this.add(item);
+        this.fraseologia = this.fraseologia.concat(item);
+        this.updateSubject();
         return true;
     }
     delete(item: Fraseologia): boolean {

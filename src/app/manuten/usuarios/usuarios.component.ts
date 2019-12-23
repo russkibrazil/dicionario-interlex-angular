@@ -11,49 +11,47 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class UsuariosComponent implements OnInit {
 
-  private usuarioForm : FormGroup;
+  usuarioForm : FormGroup;
   private permissoes = ['Administrador', 'Editor', 'Usuário'];
   private usuario : Usuario;
   private estadoNovo = true;
 
   constructor(private uSvc : UsuarioService, private route : ActivatedRoute, private router : Router) {
-    
-   }
+    this.usuarioForm = new FormGroup({
+      'usuario' : new FormControl('', Validators.required),
+      'telefone' : new FormControl('', Validators.pattern(/^[1-9]{2}[2-9][0-9]{7,8}$/)),
+      'email' : new FormControl('', Validators.email),
+      'nome' : new FormControl('', Validators.required),
+      'cpf' : new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{11}$/)]),
+      'permissao' : new FormControl('Editor', Validators.required),
+      'entrasenha' : new FormControl('', Validators.required),
+      'confirmasenha' : new FormControl('', Validators.required)
+    });
+  }
 
   ngOnInit() {
-    const usr = this.route.snapshot.params['usr'];
-    if (usr !== undefined){
+    const usr = this.route.snapshot.paramMap.get('usr');
+    if (usr !== null){
       const vct = this.uSvc.get();
       this.usuario = vct.find(
         u => u.usr === usr
       );
-      this.usuarioForm = new FormGroup({
-        'usuario' : new FormControl(this.usuario.usr, Validators.required),
-        'telefone' : new FormControl(this.usuario.telefone, Validators.pattern(/^[1-9]{2}[2-9][0-9]{7,8}$/)),
-        'email' : new FormControl(this.usuario.email, Validators.email),
-        'nome' : new FormControl(this.usuario.nome, Validators.required),
-        'cpf' : new FormControl(this.usuario.cpf, [Validators.required, Validators.pattern(/^[0-9]{11}$/)]),
-        'permissao' : new FormControl(this.usuario.nivel_permissao, Validators.required),
-          'entrasenha' : new FormControl(this.usuario.pass, Validators.required),
-          'confirma-senha' : new FormControl('', Validators.required)
-      });
-    }else{
-      this.usuarioForm = new FormGroup({
-        'usuario' : new FormControl('', Validators.required),
-        'telefone' : new FormControl('', Validators.pattern(/^[1-9]{2}[2-9][0-9]{7,8}$/)),
-        'email' : new FormControl('', Validators.email),
-        'nome' : new FormControl('', Validators.required),
-        'cpf' : new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{11}$/)]),
-        'permissao' : new FormControl('Editor', Validators.required),
-          'entrasenha' : new FormControl('', Validators.required),
-          'confirma-senha' : new FormControl('', Validators.required)
-      });
+      this.usuarioForm.patchValue({'usuario': this.usuario.usr});
+      this.usuarioForm.patchValue({'entrasenha' : this.usuario.pass});
+      this.usuarioForm.patchValue({'telefone' : this.usuario.telefone});
+      this.usuarioForm.patchValue({'email' : this.usuario.email});
+      this.usuarioForm.patchValue({'nome' : this.usuario.nome});
+      this.usuarioForm.patchValue({'cpf' : this.usuario.cpf});
+      this.usuarioForm.patchValue({'permissao' : this.usuario.nivel_permissao});
+      this.estadoNovo = false;
     }
   }
   onClickBuscar(){
       this.router.navigate(['../../buscar'], {relativeTo:this.route, queryParams: {tabela: 'usr'}});
   }
-  onSubmit(){}
+  onSubmit(){
+    this.sideButtonClicked({tipo: 'salvar'});
+  }
 
   sideButtonClicked(evento:{tipo:string}){
     const ev = evento.tipo;
@@ -87,24 +85,6 @@ export class UsuariosComponent implements OnInit {
         this.uSvc.delete(this.usuario);
         window.alert('Apagado!');
       break;
-      /*case 'primeiro':
-        this.pos = 0;
-        this.palavraAtiva = this.bancoPalavras[this.pos];
-      break;
-      case 'anterior':
-        if (this.pos > 0)
-          this.pos--;
-        this.palavraAtiva = this.bancoPalavras[this.pos];
-      break;
-      case 'proximo':
-        if (this.pos < this.bancoPalavras.length)
-          this.pos--;
-        this.palavraAtiva = this.bancoPalavras[this.pos];
-      break;
-      case 'ultimo':
-        this.pos = this.bancoPalavras.length - 1;
-        this.palavraAtiva = this.bancoPalavras[this.pos];
-      break;*/
       default:
         break;
     }

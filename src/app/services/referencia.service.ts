@@ -15,6 +15,11 @@ export class ReferenciaService implements MethodsServicesDicionario<Referencia>{
     add(item: Referencia) {
         this.referencias = this.referencias.concat(item);
         this.updateSubject();
+        const c = this.mysql.createOperation('referencias', JSON.stringify(item));
+        c.subscribe(
+            r => console.log(r),
+            er => console.log(er)
+        );
     }    
     set(item: Referencia[]) {
         this.referencias = item;
@@ -25,7 +30,13 @@ export class ReferenciaService implements MethodsServicesDicionario<Referencia>{
         if (iu == -1)
             return false;
         this.referencias.splice(iu,1);
-        this.add(item);
+        this.referencias = this.referencias.concat(item);
+        this.updateSubject();
+        const c = this.mysql.updateOperationPk('referencias', JSON.stringify(item), updateOn.Id.toString());
+        c.subscribe(
+            r => console.log(r),
+            er => console.log(er)
+        );
         return true;
     }
     delete(item: Referencia): boolean {
@@ -34,6 +45,11 @@ export class ReferenciaService implements MethodsServicesDicionario<Referencia>{
             return false;
         this.referencias.splice(id,1);
         this.updateSubject();
+        const c = this.mysql.deleteOperation('referencias', item.Id.toString());
+        c.subscribe(
+            r => console.log(r),
+            er => console.log(er)
+        );
         return true;
     }
     fetch(filtros: string[]): boolean {

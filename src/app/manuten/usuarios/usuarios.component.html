@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-sm">
-            <form method="" action="" [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="usuarioForm" (ngSubmit)="sideButtonClicked({tipo:'salvar'})">
                 <div class="form-group">
                     <label for="usuario">Nome de usuário</label>
                     <input 
@@ -12,26 +12,25 @@
                         formControlName="usuario"
                     >
                 </div>
-                <div>
-                    <div class="form-group">
-                        <label for="senha">Digite uma senha</label>
-                        <input 
-                            id="entrasenha" 
-                            class="form-control" 
-                            type="text"
-                            name="entrasenha"
-                            formControlName="entrasenha"
-                        >
-                    </div>
-                    <div class="form-group">
-                        <label for="confirma-senha">Confirme a senha</label>
-                        <input 
-                            id="confirma-senha" 
-                            class="form-control" 
-                            type="text" 
-                            name="confirma-senha"
-                        >
-                    </div>
+                <div class="form-group">
+                    <label for="senha">Digite uma senha</label>
+                    <input 
+                        id="entrasenha" 
+                        class="form-control" 
+                        type="password"
+                        name="entrasenha"
+                        formControlName="entrasenha"
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="confirmasenha">Confirme a senha</label>
+                    <input 
+                        id="confirmasenha" 
+                        class="form-control" 
+                        type="password" 
+                        name="confirmasenha"
+                        formControlName="confirmasenha"
+                    >
                 </div>
                 <div class="form-group">
                     <label for="permissao">Permissão de acesso</label>
@@ -80,6 +79,7 @@
                         formControlName="telefone"
                     >
                 </div>
+                <button type="submit"> Salvar</button>
             </form>
         </div>
         <div class="col-sm-1">

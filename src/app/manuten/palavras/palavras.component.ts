@@ -29,52 +29,38 @@ export class PalavrasComponent implements OnInit {
   private palavraAtiva : Palavra;
   private estadoNovo = true;
   
-  constructor(private router:Router, private route:ActivatedRoute, private pSvc : PalavraService) { }
+  constructor(private router:Router, private route:ActivatedRoute, private pSvc : PalavraService) {
+    this.palavraForm = new FormGroup({
+      'lema' : new FormControl('', Validators.required),
+      'sublema' : new FormControl(),
+      'idioma' : new FormControl('', Validators.required),
+      'classeGramatical' : new FormControl('', Validators.required),
+      'genero' : new FormControl('', Validators.required),
+      'definicao' : new FormControl(),
+      'notasGramaticais' : new FormControl(),
+      'notasCulturais' : new FormControl(),
+      'sinonimos' : new FormGroup({
+        'sinonimo1' : new FormControl(),
+        'sinonimo2' : new FormControl()
+      })
+    });
+   }
 
   ngOnInit() {
-    const id = this.route.snapshot.params['id'];
-    if (id !== undefined){
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id !== null){
       const vct = this.pSvc.get();
       this.palavraAtiva = vct.find(
         p => p.Id === (+id)
       );
-      this.palavraForm = new FormGroup({
-        'lema' : new FormControl(this.palavraAtiva.Lema, Validators.required),
-        'sublema' : new FormControl(),
-        'idioma' : new FormControl(this.palavraAtiva.Idioma, Validators.required),
-        'classeGramatical' : new FormControl(this.palavraAtiva.ClasseGram, Validators.required),
-        'genero' : new FormControl(this.palavraAtiva.Genero, Validators.required),
-        'definicao' : new FormControl(this.palavraAtiva.Definicao),
-        'notasGramaticais' : new FormControl(this.palavraAtiva.notas_gramatica),
-        'notasCulturais' : new FormControl(this.palavraAtiva.notas_cultura),
-        'sinonimos' : new FormGroup({
-          'sinonimo1' : new FormControl(),
-          'sinonimo2' : new FormControl()
-        })
-      });
-    }else{
-      this.palavraForm = new FormGroup({
-        'lema' : new FormControl('', Validators.required),
-        'sublema' : new FormControl(),
-        'idioma' : new FormControl('', Validators.required),
-        'classeGramatical' : new FormControl('', Validators.required),
-        'genero' : new FormControl('', Validators.required),
-        'definicao' : new FormControl(),
-        'notasGramaticais' : new FormControl(),
-        'notasCulturais' : new FormControl(),
-        'sinonimos' : new FormGroup({
-          'sinonimo1' : new FormControl(),
-          'sinonimo2' : new FormControl()
-        })
-      });
+      this.palavraForm.patchValue({'lema' : this.palavraAtiva.Lema});
+      this.palavraForm.patchValue({'idioma' : this.palavraAtiva.Idioma});
+      this.palavraForm.patchValue({'classGramatical' : this.palavraAtiva.ClasseGram});
+      this.palavraForm.patchValue({'genero' : this.palavraAtiva.Genero});
+      this.palavraForm.patchValue({'definicao' : this.palavraAtiva.Definicao});
+      this.palavraForm.patchValue({'notasGramaticais' : this.palavraAtiva.notas_gramatica});
+      this.palavraForm.patchValue({'notasCulturais' : this.palavraAtiva.notas_cultura});
     }
-  }
-  //https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/select
-  //https://www.w3schools.com/html/html_form_elements.asp
-  //https://www.positronx.io/angular-7-select-dropdown-examples-with-reactive-forms/
-  //https://www.concretepage.com/angular/angular-select-option-reactive-form
-  onSubmit(){
-
   }
 
   sideButtonClicked(evento:{tipo:string}){
@@ -89,7 +75,7 @@ export class PalavrasComponent implements OnInit {
       case 'salvar':
         if (this.palavraForm.touched && this.palavraForm.valid){
           let novo = new Palavra(
-            this.palavraAtiva.Id,
+            0,
             this.palavraForm.value['lema'],
             this.palavraForm.value['classeGramatical'],
             this.palavraForm.value['idioma'],
@@ -98,18 +84,24 @@ export class PalavrasComponent implements OnInit {
             this.palavraForm.value['genero'],
             this.palavraForm.value['definicao']
           );
-          if (this.estadoNovo)
+          if (this.estadoNovo){
+            //novo.Id = null;
             this.pSvc.add(novo);
-          else
+          }
+          else{
+            novo.Id = this.palavraAtiva.Id;
             this.pSvc.update(novo, this.palavraAtiva);
-          window.alert('Salvo!');
+          }
           this.estadoNovo = false;
-          this.sideButtonClicked({tipo:'primeiro'});
+          this.palavraAtiva = novo;
+          window.alert('Salvo!');
         }
       break;
       case 'apagar':
         this.pSvc.delete(this.palavraAtiva);
+        this.palavraAtiva = undefined;
         window.alert('Apagado!');
+        this.palavraForm.reset();
       break;
       default:
         break;
