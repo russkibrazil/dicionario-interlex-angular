@@ -16,7 +16,14 @@ export class ReferenciasComponent implements OnInit {
   private estadoNovo = true;
   private pos : number;
 
-  constructor(private rSvc : ReferenciaService, private route : ActivatedRoute, private router : Router) { }
+  constructor(private rSvc : ReferenciaService, private route : ActivatedRoute, private router : Router) {
+    this.referenciasForm = new FormGroup({
+      'codigo' : new FormControl('', [Validators.required, Validators.pattern(/^[A-Z]{1,3}[0-9]{2}[a-z]?$/)]),
+      'autor' : new FormControl('', Validators.required),
+      'descricao' : new FormControl(),
+      'ano' : new FormControl('', [Validators.required, Validators.pattern(/^[1-2][0-9]{3}$/)])
+    });
+  }
 
   ngOnInit() {
     const cod = this.route.snapshot.params['cod'];
@@ -25,19 +32,10 @@ export class ReferenciasComponent implements OnInit {
       this.referenciaAtiva = vct.find(
         r => r.Cod === cod
       );
-      this.referenciasForm = new FormGroup({
-        'codigo' : new FormControl(this.referenciaAtiva.Cod, [Validators.required, Validators.pattern(/^[A-Z]{2,3}[0-9]{2}[a-z]?$/)]),
-        'autor' : new FormControl(this.referenciaAtiva.Autor, Validators.required),
-        'descricao' : new FormControl(this.referenciaAtiva.Descricao),
-        'ano' : new FormControl(this.referenciaAtiva.Ano, [Validators.required, Validators.pattern(/^[1-2][0-9]{3}$/)])
-      });
-    }else{
-      this.referenciasForm = new FormGroup({
-        'codigo' : new FormControl('', [Validators.required, Validators.pattern(/^[A-Z]{2,3}[0-9]{2}[a-z]?$/)]),
-        'autor' : new FormControl('', Validators.required),
-        'descricao' : new FormControl(),
-        'ano' : new FormControl('', [Validators.required, Validators.pattern(/^[1-2][0-9]{3}$/)])
-      });
+      this.referenciasForm.patchValue({'codigo' : this.referenciaAtiva.Cod});
+      this.referenciasForm.patchValue({'autor': this.referenciaAtiva.Autor});
+      this.referenciasForm.patchValue({'descricao' : this.referenciaAtiva.Descricao});
+      this.referenciasForm.patchValue({'ano' : this.referenciaAtiva.Ano});
     }
   }
 
@@ -58,7 +56,6 @@ export class ReferenciasComponent implements OnInit {
       case 'salvar':
         if (this.referenciasForm.touched && this.referenciasForm.valid){
           let novo = new Referencia(
-            this.referenciaAtiva.Id,
             this.referenciasForm.value['codigo'],
             this.referenciasForm.value['autor'],
             this.referenciasForm.value['descricao'],

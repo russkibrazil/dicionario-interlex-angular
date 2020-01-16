@@ -11,7 +11,6 @@ export class PalavraService implements MethodsServicesDicionario<Palavra>{
         throw new Error("Method not implemented.");
     }
     private palavras : Palavra[] = [];
-    private palavraAtiva : Palavra;
     public sPalavras = new Subject<Palavra[]>();
 
     constructor(private mysql : MySqlConnectorService){}

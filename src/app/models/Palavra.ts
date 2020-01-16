@@ -7,6 +7,10 @@ export class Palavra{
     public notas_cultura : string;
     public Genero : string;
     public Definicao : string;
+    
+    public Sinonimo1: number;
+    public Sinonimo2 : number;
+    public Sublema : string;
 
     constructor(id: number, lema:string, cg : string, idioma: string, notag : string, notac : string, genero : string, definicao : string){
         this.Id = id;

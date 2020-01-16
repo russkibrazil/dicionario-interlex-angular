@@ -80,6 +80,9 @@ export class UsuariosComponent implements OnInit {
           this.estadoNovo = false;
           this.sideButtonClicked({tipo:'primeiro'});
         }
+        else{
+          
+        }
       break;
       case 'apagar':
         this.uSvc.delete(this.usuario);

@@ -1,4 +1,5 @@
 export class Fraseologia{
+    public Id : number;
     public idPalavra : number;
     public fraseOrig : string;
     public fraseEquiv : string;

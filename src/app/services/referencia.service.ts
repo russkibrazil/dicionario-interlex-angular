@@ -32,7 +32,7 @@ export class ReferenciaService implements MethodsServicesDicionario<Referencia>{
         this.referencias.splice(iu,1);
         this.referencias = this.referencias.concat(item);
         this.updateSubject();
-        const c = this.mysql.updateOperationPk('referencias', JSON.stringify(item), updateOn.Id.toString());
+        const c = this.mysql.updateOperationPk('referencias', JSON.stringify(item), updateOn.Cod);
         c.subscribe(
             r => console.log(r),
             er => console.log(er)
@@ -45,7 +45,7 @@ export class ReferenciaService implements MethodsServicesDicionario<Referencia>{
             return false;
         this.referencias.splice(id,1);
         this.updateSubject();
-        const c = this.mysql.deleteOperation('referencias', item.Id.toString());
+        const c = this.mysql.deleteOperation('referencias', item.Cod);
         c.subscribe(
             r => console.log(r),
             er => console.log(er)
